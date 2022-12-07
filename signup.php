@@ -125,33 +125,40 @@ function cleaninput($data){
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign up</title>
-  <style>
-  </style>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Sign Up | <?= $PROJECT_NAME?></title>
+	<link rel="stylesheet" href="style.css">
+	<style>
+	</style>
 </head>
-<body class="" >
-  <?php require "nav.php"; ?>
-
-<?php if(!$validpassword) { ?>
-<div class = signup>
-  <form method="POST" id='signup'>
-  <p id='welcomesignup'>You're almost there, Just need some information about you first!</p>
-      <label for="fname">First Name:</label>
-      <input type="text" id="fname" name="fname" placeholder="" <?php if(!$fnamevalid){ echo " style = 'border: 1px solid red'";} else{ echo "value = '$fname' ";} ?> > <?php echo $fnameerr; ?> <br>
-      <label for="lname">Lastname:</label>
-      <input type="text" id="lname" name="lname" placeholder="" <?php if(!$lnamevalid){ echo " style = 'border: 1px solid red'";} else{ echo "value = '$lname' ";} ?>?> <?php echo $lnameerr;?><br>
-      <label for="email">Email:</label>
-      <input type="email" id="email" name="email" placeholder="" <?php if(!$emailvalid){ echo " style = 'border: 1px solid red'";}else{ echo "value = '$email' ";} ?> ?> <?php echo $emailerr;?><br>
-      <label for="pword">Password:</label>
-      <input type="password" id="pword" name="pword" placeholder="" <?php if(!$pwordvalid){ echo " style = 'border: 1px solid red'";} ?>><?php echo $pworderr;?><br>
-      <label for="confirmpword">Confirm Password:</label>
-      <input type="password" id="confirmpword" name="confirmpword" placehorlder="" <?php if(!$confirmpwordvalid){ echo " style = 'border: 1px solid red'";} ?>><?php echo $confirmpworderr;?><br>
-      <input type="submit" value="submit" name="submit">
-  </form>
+<body>
+	<h1><?= $PROJECT_NAME?></h1>
+	<div class="nav">
+		<?php require "nav.php"; ?>
+	</div>
+	
+	<div class="signup">
+		<h2>Welcome to Sign Up!</h2>
+		<p'>You're almost there. Just need some information about you first!</p>
+	<?php if(!$validpassword) { ?>
+		<div class = signup>
+			<form method="POST" id='signup'>
+				<label for="fname">First Name:</label>
+				<input type="text" id="fname" name="fname" placeholder="" <?php if(!$fnamevalid){ echo " style = 'border: 1px solid red'";} else{ echo "value = '$fname' ";} ?> > <?php echo $fnameerr; ?> <br>
+				<label for="lname">Lastname:</label>
+				<input type="text" id="lname" name="lname" placeholder="" <?php if(!$lnamevalid){ echo " style = 'border: 1px solid red'";} else{ echo "value = '$lname' ";} ?>?> <?php echo $lnameerr;?><br>
+				<label for="email">Email:</label>
+				<input type="email" id="email" name="email" placeholder="" <?php if(!$emailvalid){ echo " style = 'border: 1px solid red'";}else{ echo "value = '$email' ";} ?> ?> <?php echo $emailerr;?><br>
+				<label for="pword">Password:</label>
+				<input type="password" id="pword" name="pword" placeholder="" <?php if(!$pwordvalid){ echo " style = 'border: 1px solid red'";} ?>><?php echo $pworderr;?><br>
+				<label for="confirmpword">Confirm Password:</label>
+				<input type="password" id="confirmpword" name="confirmpword" placehorlder="" <?php if(!$confirmpwordvalid){ echo " style = 'border: 1px solid red'";} ?>><?php echo $confirmpworderr;?><br>
+				<input type="submit" value="submit" name="submit">
+			</form>
+		</div>
   <?php }else echo "Thank you $fname, you will be entered in our database. "?>
-</div>
+	</div>
 </body>
 </html>

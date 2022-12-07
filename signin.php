@@ -1,22 +1,30 @@
+<?php
+	require_once("config.php");
+?>
+	
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign in</title>
-    <style>
-    </style>
+    <title>Sign In | <?= $PROJECT_NAME?></title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body class="">
+	<h1><?= $PROJECT_NAME?></h1>
+	<div class="nav">
+		<?php
+			require("nav.php");
+		?>
+	</div>
+	
     <div class = "">
     <?php
         //$passworderror = FALSE;
         //$loginerror = false;
         //uncomment when finished setting up connect.php database side
-        require_once "config.php";
-        require "nav.php";
         if (isset($_POST) && !empty($_POST)) {
             $email = htmlspecialchars($_POST['email']);
             $password = htmlspecialchars($_POST['password']);
@@ -34,7 +42,7 @@
                     $_SESSION['logged_in'] = true;
                     $_SESSION['userid'] = $data['UserID'];
                     $_SESSION['name'] = $data['FName'];
-                    header("Location: index.php");
+                    header("Location: dashboard.php");
                 } else {
                     $passworderror = true;
                 }
@@ -48,27 +56,27 @@
     </div>
 
 
-<div class = >
+<div class = "">
     <?php if(!isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == false){ ?>
         <div class="">
-        <form method="POST" id="">
-        <h2>Welcome to the Sign In/Sign Up page</h2>
-        Email: <input class = "" type="text" name = "email"/>
-        <br>
-        Password: <input class = "" type = "password" name = "password"/>
-        <br>
-        <input class = "signin_btn" type = "submit" value="login"/>
-        <p>Don't have an account? <a id='signinbtn' href="signup.php">Sign up</a></p>
-        </form>
+			<h2>Welcome to the Sign In/Sign Up page</h2>
+			<form method="POST" id="">
+				Email: <input class = "" type="text" name = "email"/>
+				<br>
+				Password: <input class = "" type = "password" name = "password"/>
+				<br>
+				<input class = "signin_btn" type = "submit" value="login"/>
+			</form>
+			<p>Don't have an account? <a id='signinbtn' href="signup.php">Sign up</a></p>
         </div>
     <?php } else{ ?>
         <h1>You are logged in</h1>
     <?php }
         if($passworderror){
-            echo "<br><h2>INCORRECT PASSWORD</h2>";
+            echo "<br><h3>INCORRECT PASSWORD</h3>";
         }
         IF ($loginerror){
-            echo "<br><h2>Email Doesn't exist, verify your spelling.</h2>";
+            echo "<br><h3>Email does not exist; verify your spelling.</h3>";
         }
     ?>
     </div>

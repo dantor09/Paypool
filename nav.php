@@ -1,48 +1,15 @@
 <nav>
-    <div>
-        <a href = "index.php">
-        <img class="" src = ""/>
-        </a>
-
-    </div>
-
-    <ul class = "nav-list">
-    <!--If user is signed in show these options -->
-    <?php if(isset($_SESSION['logged_in']) && $_SESSION['logged_in']) { ?>
-        <li class = "">
-            <a href = "index.php">Home</a>
-        </li>
-
-        <li>
-            <a href = "index.php">Link 2</a>
-        </li>
-
-        <li>
+	<?php if(isset($_SESSION['logged_in']) && $_SESSION['logged_in']) { ?>
+	    <!--If user is signed in show these options -->
+            <a href = "dashboard.php">Dashboard</a>
+            <a href = "index.php">Settings</a>
             <a href = "signout.php">Sign Out</a>
-        </li>
-
-        <li>
-            <a href = "index.php">Signed In</a>
-        </li>
-
+            <p>[Signed In]</p>
     <?php } else { ?>
-    <!--If not signed in show these options -->
-        <li>
-            <a href = "index.php">Home</a>
-        </li>
-
-        <li>
+		<!--If not signed in show these options -->
+            <a href = "standardSession.php">Home</a>
             <a href = "signin.php">Sign In</a>
-        </li>
-
-        <li>
             <a href = "signup.php">Sign Up</a>
-        </li>
-
-        <li>
-            <a href = "index.php">Not Signed in</a>
-        </li>
+            <p>[Not Signed In]</p>
     <?php } ?>
-    </ul>
-
 </nav>

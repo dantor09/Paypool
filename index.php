@@ -10,17 +10,12 @@ require_once("config.php");
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<h1><?= $PROJECT_NAME?></h1>
-<ul>
-
-    <!--<li><a href="index.mysqli.php">Examples with mysqli</a></li>
-    <li><a href="index.pdo.php">Examples with PDO</a></li> -->
-</ul>
-
-    <div class = "nav">
-    <?php
-        require_once "nav.php";
-    ?>
+	<h1><?= $PROJECT_NAME?></h1>
+    
+	<div class = "nav">
+		<?php
+			require_once "nav.php";
+		?>
     </div>
 
 </body>
