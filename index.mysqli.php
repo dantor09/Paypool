@@ -77,27 +77,38 @@ if (isset($_POST["search"])) {
 
 ?>
 
-<h2>SQL INSERT using input from form</h2>
+<h2>SQL INSERT using input (requires all) from form</h2>
 
 <?php
 $insert_form = new PhpFormBuilder();
 $insert_form->set_att("method", "POST");
-$insert_form->add_input("data to insert", array(
+$insert_form->add_input("email to insert", array(
     "type" => "text"
-), "insert_data");
+), "insert_email");
+$insert_form->add_input("password to insert", array(
+    "type" => "text"
+), "insert_password");
+$insert_form->add_input("first name to insert", array((
+    "type" => "text"
+), "insert_fname");
+$insert_form->add_input("last name to insert", array(
+), "insert_lname");
 $insert_form->add_input("Insert", array(
     "type" => "submit",
     "value" => "Insert"
 ), "insert");
 $insert_form->build_form();
 
-if (isset($_POST["insert"]) && !empty($_POST["insert_data"])) {
-    $dataToInsert = htmlspecialchars($_POST["insert_data"]);
-    echo "inserting $dataToInsert ...";
+if (isset($_POST["insert"]) && !empty($_POST["insert_email"]) &&. !empty($_POST;"insert_password"]) && !empty($_POST["insert_fname"]) is &&. !empty($_POST["insert_lname"])) {
+    $insertEmail = htmlspecialchars($_POST["insert_email"]);
+    $insertPassword = htmlspecialchars($_POST["insert_password"]);
+    $insertFName = htmlspecialchars($_POST["insert_fname"]);
+    $inserttLName = htmlspecialchars($_POST["insert_lname"]);
+    echo "inserting ...";
 
     $db = get_mysqli_connection();
-    $query = $db->prepare("insert into hello (data) values (?)");
-    $query->bind_param("s", $dataToInsert);
+    $query = $db->prepare("insert into UserProfile (Email,Password,FName,LName) values (?,?,?,?)");
+    $query->bind_param("ssss", $_POST["insert_email"], $_POST["insert_password"], $_POST["insert_fname"], $_POST["insert_lname"]);
     if ($query->execute()) {    
         header( "Location: " . $_SERVER['PHP_SELF']);
     }
@@ -115,13 +126,17 @@ $update_form->set_att("method", "POST");
 $update_form->add_input("id to update data for", array(
     "type" => "number"
 ), "update_id");
-$update_form->add_input("data to update", array(
+                        
+$update_form->add_input("attribute to update", array(
     "type" => "text"
+), "update_attribute");
+$update_form->add_input("data to update", array(
 ), "update_data");
 $update_form->add_input("Update", array(
     "type" => "submit",
     "value" => "Update"
 ), "update");
+                        
 $update_form->build_form();
 
 if (isset($_POST["update"]) 
@@ -129,11 +144,29 @@ if (isset($_POST["update"])
     && !empty($_POST["update_id"])) {
     $dataToUpdate = htmlspecialchars($_POST["update_data"]);
     $idToUpdate = htmlspecialchars($_POST["update_id"]);
+    $columnAttribute = htmlspecialchars($_POST["update_attribute"]);
     echo "updating $dataToUpdate ...";
 
     $db = get_mysqli_connection();
-    $query = $db->prepare("update hello set data= ? where id = ?");
-    $query->bind_param("si", $dataToUpdate, $idToUpdate);
+    
+    if (isset($_POST["update_attribute"]) && !empty($_POST["update_attribute"])) {
+        if ($columnAttribute == "Email") {
+            $query = $db->prepare("update UserProfile set Email = ? where UserID = ?"]);
+            $query->bind_param("si", $_POST["update_data"], $_POST["update_id"]);
+        } else if ($columnAttribute == "Password") {
+            $query = $db->prepare("update UserProfile set Password = ? where UserID = ?");
+            $query->bind_param("si", $_POST["update_data"], $_POST["update_id"]);
+        } else if ($columnAttribute == "FName") {
+            $query = $db->prepare("update UserProfile set Fname = ? where UserID = ?");
+            $query->bind_param("si", $_POST["update_data"], $_POST["update_id"]);
+        } else if ($columnAttribute == "LName") {
+            $query = $db->prepare("update UserProfile set LName = ? where UserID = ?");
+            $query->bind_param("si", $_POST["update_data"], $_POST["update_id"]);
+        } else {
+            echo "Error: Invalid Attribute";
+        }
+    }
+    
     if ($query->execute()) {    
         header( "Location: " . $_SERVER['PHP_SELF']);
     }
