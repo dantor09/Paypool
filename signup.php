@@ -79,14 +79,14 @@ if (isset($_POST['submit'])){
             Echo "All entries are valid. Ready to enter info into database<br>";
 
             $db = get_mysqli_connection();
-            $update = $db->prepare("INSERT INTO UserProfile (Email, Password, Fname, Lname) VALUES (?, ?, ?, ?)");
+            $update = $db->prepare("call CreateNewUser(?, ?, ?, ?)");
             $update->bind_param("ssss",$email, $hashed, $fname, $lname);
 
         if ($update->execute()) {
             
             $_SESSION['logged_in'] = true;
-            $_SESSION['name'] = $fname;
-            header("Location: index.php");
+            $_SESSION['fname'] = $fname;
+            header("Location: dashboard.php");
         } else {
             Echo "Error entering information into database<br><br>";
             var_dump($db->error);
@@ -94,13 +94,7 @@ if (isset($_POST['submit'])){
 
             var_dump($update);
         } 
-    }
-        
-
-
-
-    
-
+    } 
   
     /* */
     echo "<br>";
@@ -130,11 +124,9 @@ function cleaninput($data){
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Sign Up | <?= $PROJECT_NAME?></title>
 	<link rel="stylesheet" href="style.css">
-	<style>
-	</style>
+  <a href = "dashboard.php"><img src ="payool_logo.png" /></a>
 </head>
 <body>
-	<h1><?= $PROJECT_NAME?></h1>
 	<div class="nav">
 		<?php require "nav.php"; ?>
 	</div>
@@ -147,7 +139,7 @@ function cleaninput($data){
 			<form method="POST" id='signup'>
 				<label for="fname">First Name:</label>
 				<input type="text" id="fname" name="fname" placeholder="" <?php if(!$fnamevalid){ echo " style = 'border: 1px solid red'";} else{ echo "value = '$fname' ";} ?> > <?php echo $fnameerr; ?> <br>
-				<label for="lname">Lastname:</label>
+				<label for="lname">Last Name:</label>
 				<input type="text" id="lname" name="lname" placeholder="" <?php if(!$lnamevalid){ echo " style = 'border: 1px solid red'";} else{ echo "value = '$lname' ";} ?>?> <?php echo $lnameerr;?><br>
 				<label for="email">Email:</label>
 				<input type="email" id="email" name="email" placeholder="" <?php if(!$emailvalid){ echo " style = 'border: 1px solid red'";}else{ echo "value = '$email' ";} ?> ?> <?php echo $emailerr;?><br>
@@ -155,7 +147,7 @@ function cleaninput($data){
 				<input type="password" id="pword" name="pword" placeholder="" <?php if(!$pwordvalid){ echo " style = 'border: 1px solid red'";} ?>><?php echo $pworderr;?><br>
 				<label for="confirmpword">Confirm Password:</label>
 				<input type="password" id="confirmpword" name="confirmpword" placehorlder="" <?php if(!$confirmpwordvalid){ echo " style = 'border: 1px solid red'";} ?>><?php echo $confirmpworderr;?><br>
-				<input type="submit" value="submit" name="submit">
+				<input type="submit" value="Submit" name="submit">
 			</form>
 		</div>
   <?php }else echo "Thank you $fname, you will be entered in our database. "?>

@@ -88,7 +88,7 @@ $insert_form->add_input("email to insert", array(
 $insert_form->add_input("password to insert", array(
     "type" => "text"
 ), "insert_password");
-$insert_form->add_input("first name to insert", array((
+$insert_form->add_input("first name to insert", array(
     "type" => "text"
 ), "insert_fname");
 $insert_form->add_input("last name to insert", array(
@@ -99,7 +99,7 @@ $insert_form->add_input("Insert", array(
 ), "insert");
 $insert_form->build_form();
 
-if (isset($_POST["insert"]) && !empty($_POST["insert_email"]) &&. !empty($_POST;"insert_password"]) && !empty($_POST["insert_fname"]) is &&. !empty($_POST["insert_lname"])) {
+if (isset($_POST["insert"]) && !empty($_POST["insert_email"]) && !empty($_POST;"insert_password"]) && !empty($_POST["insert_fname"]) is && !empty($_POST["insert_lname"])) {
     $insertEmail = htmlspecialchars($_POST["insert_email"]);
     $insertPassword = htmlspecialchars($_POST["insert_password"]);
     $insertFName = htmlspecialchars($_POST["insert_fname"]);
