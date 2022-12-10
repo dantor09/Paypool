@@ -71,7 +71,7 @@ if(!isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == false){
                 
                 if($found)
                 {
-                    echo "User is already in this paypool session";
+                    echo "User is already in this paypool session <br>";
                 }
                 else{
                     $db = get_mysqli_connection();
