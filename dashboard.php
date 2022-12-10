@@ -128,7 +128,7 @@ if(!isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == false){
             if($rows[0]['UserID'] == $_SESSION['userid'])
             {
                 $_SESSION['SessionID'] = $_POST['enter_session'];
-                header("Location: Session.php");
+                header("Location: manager_session.php");
             }
             else{
                 echo "You are not in this session!";
