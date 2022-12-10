@@ -10,6 +10,7 @@ if(!isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == false){
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="style.css">
+    <title>Dashboard</title>
     <a href = "dashboard.php"><img src ="payool_logo.png" /></a>
 
 </head>
