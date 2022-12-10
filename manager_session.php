@@ -9,13 +9,14 @@ if(!isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == false){
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Session <?= $_SESSION['SessionID']?> | <?= $PROJECT_NAME?></title>
     <link rel="stylesheet" href="style.css">
-    <a href = "dashboard.php"><img src ="payool_logo.png" /></a>
 
 </head>
 <body>
 
-    <div class = "nav">
+    <div class>
+        <a href="signin.php"><img src="payool_logo.png" id="logo"/></a>
         <?php
                 require_once("nav.php");
         ?>

@@ -11,12 +11,19 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In | <?= $PROJECT_NAME?></title>
     <link rel="stylesheet" href="style.css">
-    <img src ="payool_logo.png" />
 </head>
 
-<body class="">
-    <div class = "">
+<body>
+    <div>
+	    <a href="signin.php"><img src="payool_logo.png" id="logo"/></a>
+	    <?php
+		    require("nav.php");
+	    ?>
+    </div>
+
+    <div>
     <?php
 
         if (isset($_POST) && !empty($_POST)) {
@@ -51,24 +58,26 @@
     </div>
 
 
-<div class = "">
+<div class = "signIn">
     <?php if(!isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == false){ ?>
-        <div class="">
+        <div class="signInForm">
+            <h2>Sign In</h2>
+            <hr>
 			<form method="POST" id="">
-				Email: <input class = "" type="text" name = "email"/>
+				Email: <input class = "input_areas" type="text" name = "email"/>
 				<br>
-				Password: <input class = "" type = "password" name = "password"/>
+				Password: <input class = "input_areas" type = "password" name = "password"/>
 				<br>
 				<input class = "signin_btn" type = "submit" value="Log In"/>
 			</form>
-			<p><a id='signinbtn' href="signup.php">Create a free Paypool Account</a></p>
+			<a class="darkLinks" href="signup.php">Create a free Paypool Account</a>
         </div>
     <?php }
         if($passworderror){
-            echo "<br><h3>Incorrect Password. Please enter your password.</h3>";
+            echo '<br><h3 class="error">Incorrect Password. Please enter your password.</h3>';
         }
         IF ($loginerror){
-            echo "<br><h3>Please enter a valid email.</h3>";
+            echo '<br><h3 class="error">Please enter a valid email.</h3>';
         }
     ?>
     </div>

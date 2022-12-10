@@ -10,13 +10,13 @@ if(!isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == false){
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="style.css">
-    <title>Dashboard</title>
-    <a href = "dashboard.php"><img src ="payool_logo.png" /></a>
+    <title>Dashboard | <?= $PROJECT_NAME?></title>
 
 </head>
 <body>
 
-    <div class = "nav">
+    <div class>
+        <a href="signin.php"><img src="payool_logo.png" id="logo"/></a>
         <?php require_once("nav.php");?>
     </div>
     <h2>
@@ -24,7 +24,7 @@ if(!isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == false){
         $fname = $_SESSION['fname'];
         $lname = $_SESSION['lname'];
         // -----------------    New Edits   -------------------------------------------
-        echo "Welcome $fname $lname!"
+        echo "Welcome, $fname $lname!"
         ?>
     </h2>
 
