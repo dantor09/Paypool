@@ -201,7 +201,30 @@
     ?>
 
     <h2></h2>
-    <?php  
+   
+    <br>
+    <?php
+        $remove_transaction_form = new PhpFormBuilder();
+        $remove_transaction_form->set_att("method", "POST");
+        $remove_transaction_form->add_input("transaction", array(
+            "type" => "submit",
+            "value" => "Remove Transaction"
+        ), "remove_transaction_button");
+        $remove_transaction_form-> add_input("Transaction", array(
+            "type" => "text",
+            "placeholder" => "9"
+        ), "transaction_input");
+        $remove_transaction_form->build_form();
+        
+        if(!empty($_POST['transaction_input']) && isset($_POST['remove_transaction_button']))
+        {
+            $db = get_mysqli_connection();
+            $remove_transaction = $db->prepare("CALL RemoveTransaction(?,?)");
+            $remove_transaction->bind_param('ss',$_POST['transaction_input'], $_SESSION['SessionID']);
+            $remove_transaction->execute();
+        }
+    ?> 
+     <?php  
         $db = get_mysqli_connection();
         $query = $db->prepare("CALL GetTransactions(?)");        
         $query->bind_param('s', $_SESSION['SessionID']);
@@ -216,7 +239,7 @@
             { 
                 echo "There is " . count($rows) . " transaction";
             }
-            
+         
             echo makeTable($rows);
             $query->close();
         }
@@ -226,7 +249,7 @@
             echo "Additinal Error: " . mysqli_errno();
             echo "Even more errors: " . $query->error;
         }
-    ?>  
+    ?> 
     <h2></h2><h2></h2>
     <?php
         $db = get_mysqli_connection();
