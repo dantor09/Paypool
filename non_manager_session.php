@@ -97,7 +97,7 @@
             $stmt = $db->prepare("CALL AddTransaction (?,?,?,?,?,?)");
             $stmt->bind_param('sssssd',$_SESSION['userid'], $_SESSION['SessionID'], $_POST['category'], $_POST["date"],$_POST["item"], $_POST["price"]);
             if($stmt->execute()){    
-                echo "Transaction added successfully";
+                echo "Transaction added successfully <br>";
                 $stmt->close();
             }
             else
