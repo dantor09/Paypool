@@ -41,8 +41,7 @@
             if(count($rows4) > 1 || count($rows4) == 0){
                 echo "There are " . count($rows4) . " members in session " . $_SESSION['SessionID'];
             }
-            else
-            { 
+            else{ 
                 echo "There is " . count($rows4) . " member in session " . $_SESSION['SessionID'];
             }
             echo makeTable($rows4);
@@ -55,30 +54,6 @@
             echo "Even more errors: " . $query4->error;
         }
 
-        if(isset($_POST["Submit"]) && !empty($_POST["item"]) && !empty($_POST["price"])){
-            if(!$_POST["date"]){
-                echo "Date is not entered<br>"; 
-                date_default_timezone_set('America/Los_Angleles');
-                $_POST["date"] = date('Y-m-d H:i');
-            }
-        
-           $db = get_mysqli_connection();
-          $stmt = $db->prepare("CALL AddTransaction (?,?,?,?,?,?)");
-           $stmt->bind_param('sssssd',$_SESSION['userid'], $_SESSION['SessionID'], $_POST['category'], $_POST["date"],$_POST["item"], $_POST["price"]);
-           if($stmt->execute()){
-           }else{
-            echo "testing4";
-            echo "Error: " . mysqli_error();
-            echo "Additinal Error: " . mysqli_errno();
-            echo "Even more errors: " . $stmt->error;
-           }
-            /*$stmt->close();
-            echo "Query Entered!";
-            header("Location: " . $_SERVER["PHP_SELF"]);
-*/
-            
-
-        }
 
     ?>
     <form method="POST">
@@ -109,6 +84,29 @@
         <br><br>
     </form>
 
+    <?php
+        if(isset($_POST["Submit"]) && !empty($_POST["item"]) && !empty($_POST["price"]))
+        {
+            if(!$_POST["date"])
+            {
+                date_default_timezone_set('America/Los_Angleles');
+                $_POST["date"] = date('Y-m-d H:i');
+            }
+        
+            $db = get_mysqli_connection();
+            $stmt = $db->prepare("CALL AddTransaction (?,?,?,?,?,?)");
+            $stmt->bind_param('sssssd',$_SESSION['userid'], $_SESSION['SessionID'], $_POST['category'], $_POST["date"],$_POST["item"], $_POST["price"]);
+            if($stmt->execute()){    
+                echo "Transaction added successfully";
+                $stmt->close();
+            }
+            else
+            {
+                echo "Transaction not added<br>";
+                echo "Error: " . $stmt->error . "<br>";
+            }
+        }
+    ?>
 <br><br>
     <?php  
        $db = get_mysqli_connection();
