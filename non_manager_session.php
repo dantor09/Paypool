@@ -4,7 +4,6 @@
     header("Location: signin.php");
 }
 ?>
-
 <html>
 <head>
     <meta charset="utf-8">
@@ -38,6 +37,14 @@
         {
             $result4 = $query4->get_result();
             $rows4 = $result4->fetch_all(MYSQLI_ASSOC);
+            
+            if(count($rows4) > 1 || count($rows4) == 0){
+                echo "There are " . count($rows4) . " members in session " . $_SESSION['SessionID'];
+            }
+            else
+            { 
+                echo "There is " . count($rows4) . " member in session " . $_SESSION['SessionID'];
+            }
             echo makeTable($rows4);
             $query4->close();
         }
@@ -73,11 +80,13 @@
             $result = $query->get_result();
             $rows = $result->fetch_all(MYSQLI_ASSOC);
             if(count($rows) > 1 || count($rows) == 0){
-                echo "There are " . count($rows) . " transactions: " . $_SESSION['SessionID'];
+                echo "There are " . count($rows) . " transactions";
             }
-            else{ 
-                echo "There is " . count($rows) . " transaction in session: " . $_SESSION['SessionID'];
+            else
+            { 
+                echo "There is " . count($rows) . " transaction";
             }
+            
             echo makeTable($rows);
         }
         else
