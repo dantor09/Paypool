@@ -99,6 +99,17 @@ if(!isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == false){
     //    }
     //}
     ?>
+    <h2></h2><h2></h2>
+    <?php
+        $db = get_mysqli_connection();
+        $query = $db->prepare("SELECT SessionID AS 'Joined Sessions\t', Percentage FROM Joins WHERE UserID = ? AND SessionID NOT IN (SELECT SessionID FROM PaypoolSession WHERE UserID = ?)");
+        $query->bind_param('ss', $_SESSION['userid'], $_SESSION['userid'] );
+        $query->execute();
+        $result = $query->get_result();
+        $rows = $result->fetch_all(MYSQLI_ASSOC);
+        echo makeTable($rows);
+        $query->close();
+    ?>
     
     <?php 
         //php to display certain users 
@@ -148,52 +159,45 @@ if(!isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == false){
                     $_SESSION['SessionID'] = $_POST['enter_session'];
                     header("Location: manager_session.php");
                 }
-                // else user is not a manager so redirect to non manager session page
                 else{
                     $_SESSION['SessionID'] = $_POST['enter_session'];
                     header("Location: non_manager_session.php");
                 }
             }
-            // User is not in session 
             else{
                 echo "You are not in session " . $_POST['enter_session'];
             }    
         }
     
     ?>
-    <h2></h2>
+    
+    
+     <h2></h2><h2></h2>
+    <?php    
+        echo "Transactions from Joined Sessions:";
+        $db = get_mysqli_connection();
+        $query2 = $db->prepare("SELECT TransactionID, concat(FName,' ',LName) AS 'Member', SessionID,ItemPurchased, Price FROM Transaction NATURAL JOIN UserProfile WHERE SessionID IN (SELECT SessionID FROM Joins WHERE UserID = ?) AND SessionID NOT IN (SELECT SessionID FROM PaypoolSession WHERE UserID = ?)");  
+        $query2->bind_param('ss', $_SESSION['userid'], $_SESSION['userid']);
+        $query2->execute();
+        $result2 = $query2->get_result();
+        $rows2 = $result2->fetch_all(MYSQLI_ASSOC);
+        echo makeTable($rows2);
+        $query2->close();
+    ?>
+
+        <h2></h2>
     <?php
-    if (!$query->get_result()) {
+        
         echo "Transactions from Sessions that you Manage:";
-        $query2 = $db->prepare("SELECT TransactionID, concat(FName,' ',LName) AS 'Member', SessionID, ItemPurchased, Price FROM Transaction NATURAL JOIN UserProfile WHERE SessionID IN (SELECT SessionID FROM PaypoolSession WHERE UserID = ?)");  
+        $query2 = $db->prepare("SELECT TransactionID, concat(FName,' ',LName) AS 'Member', SessionID,ItemPurchased, Price FROM Transaction NATURAL JOIN UserProfile WHERE SessionID IN (SELECT SessionID FROM PaypoolSession WHERE UserID = ?)");  
         $query2->bind_param('s', $_SESSION['userid']);
         $query2->execute();
         $result2 = $query2->get_result();
         $rows2 = $result2->fetch_all(MYSQLI_ASSOC);
         echo makeTable($rows2);
-    }
+        $query2->close();
+    
     ?>
-    <h2></h2><h2></h2>
-    <?php
-        $db = get_mysqli_connection();
-        $query = $db->prepare("SELECT SessionID AS 'Joined Sessions\t', Percentage FROM Joins WHERE UserID = ? AND SessionID NOT IN (SELECT SessionID FROM PaypoolSession WHERE UserID = ?)");
-        $query->bind_param('ss', $_SESSION['userid'], $_SESSION['userid'] );
-        $query->execute();
-        $result = $query->get_result();
-        $rows = $result->fetch_all(MYSQLI_ASSOC);
-        echo makeTable($rows);
-        
-        if (!$query->get_result()) {
-            echo "Transactions from Joined Sessions:";
-            $query2 = $db->prepare("SELECT TransactionID, concat(FName,' ',LName) AS 'Member', SessionID, ItemPurchased, Price FROM Transaction NATURAL JOIN UserProfile WHERE SessionID IN (SELECT SessionID FROM Joins wherE UserID = ?) AND SessionID NOT IN (SELECT SessionID FROM PaypoolSession WHERE UserID = ?)");  
-            $query2->bind_param('ss', $_SESSION['userid'], $_SESSION['userid']);
-            $query2->execute();
-            $result2 = $query2->get_result();
-            $rows2 = $result2->fetch_all(MYSQLI_ASSOC);
-            echo makeTable($rows2);
-        }
-                //php logic to populate with current logged in user sessions
-        ?>
     </div>
 
 </body>
