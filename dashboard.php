@@ -125,6 +125,7 @@ if(!isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == false){
             $result = $query->get_result();
             $rows = $result->fetch_all(MYSQLI_ASSOC);
 
+            //for test change to managersession.php
             if($rows[0]['UserID'] == $_SESSION['userid'])
             {
                 $_SESSION['SessionID'] = $_POST['enter_session'];
