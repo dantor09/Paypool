@@ -72,7 +72,12 @@
         {
             $result = $query->get_result();
             $rows = $result->fetch_all(MYSQLI_ASSOC);
-            echo "There are " . count($rows) . " users in session: " . $_SESSION['SessionID'];
+            if(count($rows) > 1 || count($rows) == 0){
+                echo "There are " . count($rows) . " transactions: " . $_SESSION['SessionID'];
+            }
+            else{ 
+                echo "There is " . count($rows) . " transaction in session: " . $_SESSION['SessionID'];
+            }
             echo makeTable($rows);
         }
         else
