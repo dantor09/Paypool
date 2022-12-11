@@ -116,7 +116,6 @@ if(!isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == false){
 
         if(!empty($_POST['enter_session']))
         {
-            echo "Connecting to session...";
             $db = get_mysqli_connection();
             // Check that User Manages Session Entered 
             $query = $db->prepare("SELECT UserID FROM PaypoolSession WHERE SessionID = ? ");
@@ -132,11 +131,8 @@ if(!isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == false){
                 header("Location: non_manager_session.php");
             }
             else{
-                echo "You are not in this session!";
-            }
-            
-            echo "You have " . count($rows) . " users in your session.";
-                
+                echo "You are not in session " . $_POST['enter_session'];
+            }   
             echo makeTable($rows);
         }
     
