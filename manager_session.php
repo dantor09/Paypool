@@ -78,6 +78,16 @@
                     echo "User is already in this paypool session <br>";
                 }
                 else{
+                    /*
+                    1. if user is not in the session add the user into the session
+                    2. count the new number of users inside of that session (ie. 4)
+                    3. determine the percentage of the total users to the 2nd decimal ( ie. 100/4 = 25..) select round(40,2) = 40.00
+                    4. change percentage of given SessionID that just added user to the same session 
+                        (ie.    UPDATE Joins
+                                SET Percentage = 'new percentage'
+                                WHERE SessionID = $_POST[SessionID];
+                     )
+                    */
                     $db = get_mysqli_connection();
                     $name = $db->prepare("SELECT UserID FROM UserProfile WHERE FName = ?");
                     $name->bind_param('s', $first_name[0]['FName']);
@@ -91,7 +101,7 @@
                 }
                
 
-            }
+            }   
             else{
                 echo "User does not exist <br>";
             }
