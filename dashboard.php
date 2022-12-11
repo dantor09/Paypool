@@ -112,11 +112,15 @@
                 {
                     $db = get_mysqli_connection();
                     // Check that User Manages Session Entered 
-                    $query = $db->prepare("SELECT UserID FROM PaypoolSession WHERE SessionID = ? ");
+                    $query = $db->prepare("SELECT Fname, Lname, PaypoolSession.UserID FROM PaypoolSession JOIN UserProfile ON(UserProfile.UserID = PaypoolSession.UserID) WHERE SessionID = ? ");
                     $query->bind_param('s', $_POST['enter_session']);
                     $query->execute();
                     $result = $query->get_result();
                     $rows = $result->fetch_all(MYSQLI_ASSOC);
+                    
+                    $_SESSION['manager_first_name'] = $rows[0]['Fname'];
+                    $_SESSION['manager_last_name'] = $rows[0]['Lname'];
+                    
                     //if user is manager then redirect to manager session page
                     if($rows[0]['UserID'] == $_SESSION['userid'])
                     {

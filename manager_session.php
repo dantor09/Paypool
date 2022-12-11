@@ -27,7 +27,9 @@
         $lname = $_SESSION['lname'];
     ?>
     </h2>
-
+    <?php 
+        echo "<H2> You are the manager of this session </H2> <br>";
+    ?>
     <?php
         $add_user_form = new PhpFormBuilder();
         $add_user_form->set_att("method", "POST");
