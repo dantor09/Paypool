@@ -79,12 +79,14 @@
                 }
                 else{
                     /*
+                    UPDATE Joins SET Percentage = (SELECT 100/count(UserID) from Joins where SessionID = 36) WHERE SessionID = '36';
+
                     1. if user is not in the session add the user into the session
                     2. count the new number of users inside of that session (ie. 4)
                     3. determine the percentage of the total users to the 2nd decimal ( ie. 100/4 = 25..) select round(40,2) = 40.00
                     4. change percentage of given SessionID that just added user to the same session 
                         (ie.    UPDATE Joins
-                                SET Percentage = 'new percentage'
+                                SET Percentage = new percentage
                                 WHERE SessionID = $_POST[SessionID];
                      )
                     */
