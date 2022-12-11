@@ -46,6 +46,7 @@
             }
             echo makeTable($rows4);
             $query4->close();
+            echo "<br><br>";
         }
         else
         {
@@ -53,8 +54,6 @@
             echo "Additinal Error: " . mysqli_errno();
             echo "Even more errors: " . $query4->error;
         }
-
-
     ?>
     <form method="POST">
         <label for="category">Transaction Category:</label>
@@ -81,7 +80,7 @@
         <input type="datetime-local" id="test_datetimelocal" name = "date" ><br>
 
         <input type="submit" value="Submit" name = "Submit">
-        <br><br>
+        <br>
     </form>
 
     <?php
@@ -107,7 +106,7 @@
             }
         }
     ?>
-<br><br>
+    <br>
     <?php  
        $db = get_mysqli_connection();
         $query = $db->prepare("CALL GetTransactions(?)");        
