@@ -54,11 +54,36 @@
             echo "Additinal Error: " . mysqli_errno();
             echo "Even more errors: " . $query4->error;
         }
-    ?>
 
+        if(isset($_POST["Submit"]) && !empty($_POST["item"]) && !empty($_POST["price"])){
+            if(!$_POST["date"]){
+                echo "Date is not entered<br>"; 
+                date_default_timezone_set('America/Los_Angleles');
+                $_POST["date"] = date('Y-m-d H:i');
+            }
+        
+           $db = get_mysqli_connection();
+          $stmt = $db->prepare("CALL AddTransaction (?,?,?,?,?,?)");
+           $stmt->bind_param('sssssd',$_SESSION['userid'], $_SESSION['SessionID'], $_POST['category'], $_POST["date"],$_POST["item"], $_POST["price"]);
+           if($stmt->execute()){
+           }else{
+            echo "testing4";
+            echo "Error: " . mysqli_error();
+            echo "Additinal Error: " . mysqli_errno();
+            echo "Even more errors: " . $stmt->error;
+           }
+            /*$stmt->close();
+            echo "Query Entered!";
+            header("Location: " . $_SERVER["PHP_SELF"]);
+*/
+            
+
+        }
+
+    ?>
     <form method="POST">
-        <label for="cat">Transaction Category:</label>
-        <select name="cat" id="cat">
+        <label for="category">Transaction Category:</label>
+        <select name="category" id="category">
             <option value="food">Food</option>
             <option value="gas">Gas</option>
             <option value="transportation">Transportation</option>
@@ -71,16 +96,16 @@
         <br>
 
         <label for="item">Item: </label>
-        <input type="text" name = "item"><br> 
+        <input type="text" placeholder="Tacos" name = "item"><br> 
 
         <label for="price">Price: </label>
-        <input type="text" name = "price"><br>
+        <input type="text" placeholder = "4.00" name = "price"><br>
 
-
+        <!--there is a default for today, have if statement to default if nothing is entered -->
         <label>Date of Transaction: </label>
-        <input type="datetime-local" id="test_datetimelocal"><br>
+        <input type="datetime-local" id="test_datetimelocal" name = "date" ><br>
 
-        <input type="submit" value="Submit">
+        <input type="submit" value="Submit" name = "Submit">
         <br><br>
     </form>
 
@@ -118,8 +143,10 @@
             { 
                 echo "There is " . count($rows) . " transaction";
             }
-            
             echo makeTable($rows);
+            $query->close();
+            
+            
         }
         else
         {
