@@ -39,6 +39,7 @@
             $result4 = $query4->get_result();
             $rows4 = $result4->fetch_all(MYSQLI_ASSOC);
             echo makeTable($rows4);
+            $query4->close();
         }
         else
         {
