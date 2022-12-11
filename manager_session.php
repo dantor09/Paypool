@@ -107,6 +107,7 @@ if(!isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == false){
                 $rows = $result->fetch_all(MYSQLI_ASSOC);
                 echo "You have " . count($rows) . " users in session: " . $_SESSION['SessionID'];
                 echo makeTable($rows);
+                $query->close();
             }
             else
             {
@@ -157,24 +158,37 @@ if(!isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == false){
                 "type" => "text",
                 "placeholder" => "Purchase Type"
             ), "purchase_type_input");
-            $add_transaction_form->build_form();
-
-        
-                
+            $add_transaction_form->build_form();    
         ?>
 
         <h2></h2>
-        <?php
-            if (!$query->get_result()) {
-                echo "Transactions from session: " . $_SESSION['SessionID'];
-                $query2 = $db->prepare("SELECT TransactionID, concat(FName,' ',LName) AS 'Member', SessionID, ItemPurchased, Price FROM Transaction NATURAL JOIN UserProfile WHERE SessionID IN (SELECT SessionID FROM PaypoolSession WHERE UserID = ?)");  
-                $query2->bind_param('s', $_SESSION['userid']);
-                $query2->execute();
-                $result2 = $query2->get_result();
-                $rows2 = $result2->fetch_all(MYSQLI_ASSOC);
-                echo makeTable($rows2);
+        <?php  
+            $db = get_mysqli_connection();
+            $query = $db->prepare("CALL GetTransactions(?)");        
+            $query->bind_param('s', $_SESSION['SessionID']);
+
+            if($query->execute())
+            {
+                $result = $query->get_result();
+                $rows = $result->fetch_all(MYSQLI_ASSOC);
+                if(count($rows) > 1 || count($rows) == 0){
+                    echo "There are " . count($rows) . " transactions";
+                }
+                else
+                { 
+                    echo "There is " . count($rows) . " transaction";
+                }
+                
+                echo makeTable($rows);
+                $query->close();
             }
-            ?>
+            else
+            {
+                echo "Error: " . mysqli_error();
+                echo "Additinal Error: " . mysqli_errno();
+                echo "Even more errors: " . $query->error;
+            }
+    ?>  
             <h2></h2><h2></h2>
             <?php
             $db = get_mysqli_connection();
