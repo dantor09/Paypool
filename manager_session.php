@@ -109,13 +109,9 @@
                     echo $first_name[0]['FName']. " was added successfully <br>";
                     $query->close();
 
-                    $db = get_mysqli_connection();
-                    $update_percentage = $db->prepare("CALL UpdatePercentages(?)");
-                    $update_percentage->bind_param('s', $_SESSION['SessionID']);
-                    $update_percentage->execute();
-                    $update_percentage->close();
+                    
                 }
-               
+                    
 
             }   
             else{
@@ -123,6 +119,12 @@
             }
 
         }
+
+        $db = get_mysqli_connection();
+        $update_percentage = $db->prepare("CALL UpdatePercentages(?)");
+        $update_percentage->bind_param('s', $_SESSION['SessionID']);
+        $update_percentage->execute();
+        $update_percentage->close();
     ?>
 
     <?php  
