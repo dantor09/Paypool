@@ -1,6 +1,6 @@
 <?php
-require_once("config.php");
-if(!isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == false){
+    require_once("config.php");
+    if(!isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == false){
     header("Location: signin.php");
 }
 ?>
@@ -18,7 +18,7 @@ if(!isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == false){
     <div class>
         <a href="signin.php"><img src="payool_logo.png" id="logo"/></a>
         <?php
-                require_once("nav.php");
+            require_once("nav.php");
         ?>
     </div>
     <h2>
@@ -63,18 +63,17 @@ if(!isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == false){
                 $index_count = 0;
                 while($index_count < count($row_names) && !$found)
                 {
-                    if($row_names[$index_count]['FName'] == $first_name[0]['FName'])
-                    {
+                    if($row_names[$index_count]['FName'] == $first_name[0]['FName']){
                         $found = true;
                     }
                     $index_count++;
                 }
                 
-                if($found)
-                {
+                if($found){
                     echo "User is already in this paypool session <br>";
                 }
-                else{
+                else
+                {
                     $db = get_mysqli_connection();
                     $name = $db->prepare("SELECT UserID FROM UserProfile WHERE FName = ?");
                     $name->bind_param('s', $first_name[0]['FName']);
@@ -97,55 +96,26 @@ if(!isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == false){
     ?>
 
     <?php  
-            $db = get_mysqli_connection();
-            $query = $db->prepare("CALL GetMembers(?)");
-            $query->bind_param('s', $_SESSION['SessionID']);
+        $db = get_mysqli_connection();
+        $query = $db->prepare("CALL GetMembers(?)");
+        $query->bind_param('s', $_SESSION['SessionID']);
 
-            if($query->execute())
-            {
-                $result = $query->get_result();
-                $rows = $result->fetch_all(MYSQLI_ASSOC);
-                echo "You have " . count($rows) . " users in session: " . $_SESSION['SessionID'];
-                echo makeTable($rows);
-            }
-            else
-            {
-                echo "Error: " . mysqli_error();
-                echo "Additinal Error: " . mysqli_errno();
-                echo "Even more errors: " . $query->error;
-            }
+        if($query->execute())
+        {
+            $result = $query->get_result();
+            $rows = $result->fetch_all(MYSQLI_ASSOC);
+            echo "You have " . count($rows) . " users in session: " . $_SESSION['SessionID'];
+            echo makeTable($rows);
+        }
+        else
+        {
+            echo "Error: " . mysqli_error();
+            echo "Additinal Error: " . mysqli_errno();
+            echo "Even more errors: " . $query->error;
+        }
     ?>
 
     <div class="">
-        <?php
-        //DELETE A SESSION THAT USER MANAGES
-        //if (!$query->get_result()) {
-        //    $delete_form = new PhpFormBuilder();
-        //    $delete_form->set_att("method", "POST");
-        //    $delete_form->add_input("Enter Session ID to Delete:", array(
-        //        "type" => "number",
-        //    ), "delete_id");
-        //    $delete_form->build_form();
-        //    if (isset($_POST["delete_id"])) {
-        //        $db = get_mysqli_connection();
-        //        //$query1 = false;
-        //        //$query2 = false;
-    //
-        //        if (!empty($_POST["delete_id"])) {
-        //            echo "deleting by id...";
-        //            $query1 = $db->prepare("delete from PaypoolSession where SessionID = ?");
-        //            $query1->$bind_param("s", $_POST['delete_id']);
-        //            $query1->execute();
-        //            $_SESSION["affected_rows"] = $db->affected_rows;
-        //            $query2 = $db->prepare("delete from Joins where SessionID = ?");
-        //            $query2->$bind_param("s", $_POST['delete_id']);
-        //            $query2->execute();
-        //            $_SESSION["affected_rows"] = $db->affected_rows;
-        //            //header("Location: " . $_SERVER["PHP_SELF"]);
-        //        }
-        //    }
-        //}
-        ?>
         <?php
             $add_transaction_form = new PhpFormBuilder();
             $add_transaction_form->set_att("method", "POST");
@@ -157,15 +127,13 @@ if(!isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == false){
                 "type" => "text",
                 "placeholder" => "Purchase Type"
             ), "purchase_type_input");
-            $add_transaction_form->build_form();
-
-        
-                
+            $add_transaction_form->build_form(); 
         ?>
 
         <h2></h2>
         <?php
-            if (!$query->get_result()) {
+            if (!$query->get_result()) 
+            {
                 echo "Transactions from session: " . $_SESSION['SessionID'];
                 $query2 = $db->prepare("SELECT TransactionID, concat(FName,' ',LName) AS 'Member', SessionID, ItemPurchased, Price FROM Transaction NATURAL JOIN UserProfile WHERE SessionID IN (SELECT SessionID FROM PaypoolSession WHERE UserID = ?)");  
                 $query2->bind_param('s', $_SESSION['userid']);
@@ -185,7 +153,8 @@ if(!isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == false){
             $rows = $result->fetch_all(MYSQLI_ASSOC);
             echo makeTable($rows);
             
-            if (!$query->get_result()) {
+            if (!$query->get_result()) 
+            {
                 echo "Transactions from Joined Sessions:";
                 $query2 = $db->prepare("SELECT TransactionID, concat(FName,' ',LName) AS 'Member', SessionID, ItemPurchased, Price FROM Transaction NATURAL JOIN UserProfile WHERE SessionID IN (SELECT SessionID FROM Joins wherE UserID = ?) AND SessionID NOT IN (SELECT SessionID FROM PaypoolSession WHERE UserID = ?)");  
                 $query2->bind_param('ss', $_SESSION['userid'], $_SESSION['userid']);
@@ -194,9 +163,7 @@ if(!isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == false){
                 $rows2 = $result2->fetch_all(MYSQLI_ASSOC);
                 echo makeTable($rows2);
             }
-                    //php logic to populate with current logged in user sessions
         ?>
     </div>
-
 </body>
 </html>
