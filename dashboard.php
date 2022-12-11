@@ -117,23 +117,47 @@ if(!isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == false){
         if(!empty($_POST['enter_session']))
         {
             $db = get_mysqli_connection();
-            // Check that User Manages Session Entered 
-            $query = $db->prepare("SELECT UserID FROM PaypoolSession WHERE SessionID = ? ");
+            $query = $db->prepare("SELECT UserID FROM Joins WHERE SessionID = ? ");
             $query->bind_param('s', $_POST['enter_session']);
             $query->execute();
             $result = $query->get_result();
             $rows = $result->fetch_all(MYSQLI_ASSOC);
-
-            //for test change to managersession.php
-            if($rows[0]['UserID'] == $_SESSION['userid'])
+            $index_count = 0;
+            $found = false;
+            while($index_count < count($rows) && !$found)
             {
-                $_SESSION['SessionID'] = $_POST['enter_session'];
-                header("Location: non_manager_session.php");
+                if($rows[$index_count]['UserID'] == $_SESSION['userid']){
+                    $found = true;
+                }
+                $index_count++;
             }
+            $query->close();
+            //if user is in session then check if they manage it
+            if($found)
+            {
+                $db = get_mysqli_connection();
+                // Check that User Manages Session Entered 
+                $query = $db->prepare("SELECT UserID FROM PaypoolSession WHERE SessionID = ? ");
+                $query->bind_param('s', $_POST['enter_session']);
+                $query->execute();
+                $result = $query->get_result();
+                $rows = $result->fetch_all(MYSQLI_ASSOC);
+                //if user is manager then redirect to manager session page
+                if($rows[0]['UserID'] == $_SESSION['userid'])
+                {
+                    $_SESSION['SessionID'] = $_POST['enter_session'];
+                    header("Location: manager_session.php");
+                }
+                // else user is not a manager so redirect to non manager session page
+                else{
+                    $_SESSION['SessionID'] = $_POST['enter_session'];
+                    header("Location: non_manager_session.php");
+                }
+            }
+            // User is not in session 
             else{
                 echo "You are not in session " . $_POST['enter_session'];
-            }   
-            echo makeTable($rows);
+            }    
         }
     
     ?>
