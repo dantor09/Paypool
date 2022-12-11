@@ -102,10 +102,12 @@
                     $name->execute();
                     $result = $name->get_result();
                     $user_id = $result->fetch_all(MYSQLI_ASSOC);
+                    $name->close();
                     $query = $db->prepare("CALL AddUserToSession(?,?)");
                     $query->bind_param('ss', $user_id[0]['UserID'], $_SESSION['SessionID']);
                     $query->execute();
                     echo $first_name[0]['FName']. " was added successfully <br>";
+                    $query->close();
                 }
                
 
