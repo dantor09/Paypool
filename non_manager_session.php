@@ -55,7 +55,38 @@
             echo "Even more errors: " . $query4->error;
         }
     ?>
+
+    <form method="POST">
+        <label for="cat">Transaction Category:</label>
+        <select name="cat" id="cat">
+            <option value="food">Food</option>
+            <option value="gas">Gas</option>
+            <option value="transportation">Transportation</option>
+            <option value="hotel">Hotel</option>
+            <option value="bars">Bars</option>
+            <option value="entertainment">Entertainment</option>
+            <option value="electronics">Electronics</option>
+            <option value="other">Other</option>
+        </select>
+        <br>
+
+        <label for="item">Item: </label>
+        <input type="text" name = "item"><br> 
+
+        <label for="price">Price: </label>
+        <input type="text" name = "price"><br>
+
+
+        <label>Date of Transaction: </label>
+        <input type="datetime-local" id="test_datetimelocal"><br>
+
+        <input type="submit" value="Submit">
+        <br><br>
+    </form>
+
+
     <?php
+    /*
         $add_transaction_form = new PhpFormBuilder();
         $add_transaction_form->set_att("method", "POST");
         $add_transaction_form->add_input("transaction", array(
@@ -67,9 +98,10 @@
             "placeholder" => "Purchase Type"
         ), "purchase_type_input");
         $add_transaction_form->build_form();
+        */
     ?>
 
-
+<br><br>
     <?php  
        $db = get_mysqli_connection();
         $query = $db->prepare("CALL GetTransactions(?)");        
