@@ -84,23 +84,6 @@
         <br><br>
     </form>
 
-
-    <?php
-    /*
-        $add_transaction_form = new PhpFormBuilder();
-        $add_transaction_form->set_att("method", "POST");
-        $add_transaction_form->add_input("transaction", array(
-            "type" => "submit",
-            "value" => "Add Transaction"
-        ), "transactionbtn");
-        $add_transaction_form-> add_input("PurchaseType", array(
-            "type" => "text",
-            "placeholder" => "Purchase Type"
-        ), "purchase_type_input");
-        $add_transaction_form->build_form();
-        */
-    ?>
-
 <br><br>
     <?php  
        $db = get_mysqli_connection();
