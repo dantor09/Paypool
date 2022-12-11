@@ -63,6 +63,7 @@
                 $row_names = $result2->fetch_all(MYSQLI_ASSOC);
                 $found = false;
                 $index_count = 0;
+                //while statement to make add everyone listed
                 while($index_count < count($row_names) && !$found)
                 {
                     if($row_names[$index_count]['FName'] == $first_name[0]['FName'])
@@ -71,7 +72,7 @@
                     }
                     $index_count++;
                 }
-                
+                //check to see if user is in the session already
                 if($found)
                 {
                     echo "User is already in this paypool session <br>";
@@ -88,7 +89,7 @@
                     $query->execute();
                     echo $first_name[0]['FName']. " was added successfully <br>";
                 }
-                
+               
 
             }
             else{
