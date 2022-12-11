@@ -29,7 +29,7 @@
     </h2>
 
     <?php
-        $add_user_form = new PhpFormBuilder();
+       /* $add_user_form = new PhpFormBuilder();
         $add_user_form->set_att("method", "POST");
         $add_user_form->add_input("usermail", array(
             "type" => "submit",
@@ -92,7 +92,7 @@
                 echo "User does not exist <br>";
             }
 
-        }
+        }*/
     ?>
 
     <?php  
