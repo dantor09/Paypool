@@ -152,30 +152,7 @@
         ?>
 
         <h2></h2><h2></h2>
-        <?php    
-            echo "Transactions from Joined Sessions:";
-            $db = get_mysqli_connection();
-            $query2 = $db->prepare("SELECT TransactionID, concat(FName,' ',LName) AS 'Member', SessionID,ItemPurchased, Price FROM Transaction NATURAL JOIN UserProfile WHERE SessionID IN (SELECT SessionID FROM Joins WHERE UserID = ?) AND SessionID NOT IN (SELECT SessionID FROM PaypoolSession WHERE UserID = ?)");  
-            $query2->bind_param('ss', $_SESSION['userid'], $_SESSION['userid']);
-            $query2->execute();
-            $result2 = $query2->get_result();
-            $rows2 = $result2->fetch_all(MYSQLI_ASSOC);
-            echo makeTable($rows2);
-            $query2->close();
-        ?>
-
-        <h2></h2>
-        <?php
-            
-            echo "Transactions from Sessions that you Manage:";
-            $query2 = $db->prepare("SELECT TransactionID, concat(FName,' ',LName) AS 'Member', SessionID,ItemPurchased, Price FROM Transaction NATURAL JOIN UserProfile WHERE SessionID IN (SELECT SessionID FROM PaypoolSession WHERE UserID = ?)");  
-            $query2->bind_param('s', $_SESSION['userid']);
-            $query2->execute();
-            $result2 = $query2->get_result();
-            $rows2 = $result2->fetch_all(MYSQLI_ASSOC);
-            echo makeTable($rows2);
-            $query2->close();
-        ?>
+    
     </div>
 </body>
 </html>
