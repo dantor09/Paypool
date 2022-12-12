@@ -376,13 +376,13 @@
         echo "<h2>Session Transaction Total: $"; 
         echo $totaldue2;
         echo "</h2>";
-        echo "<h2>Total due to Session: $"; 
+        echo "<h2>Total Each Member Owes to Session: $"; 
         echo $totaldue;
         echo"</h2>";
 
 
 
     ?> 
-    
+
 </body>
 </html>
