@@ -201,35 +201,7 @@
     ?>
     <br>
     <div class="">
-    <?php
-        //DELETE A SESSION THAT USER MANAGES
-        //if (!$query->get_result()) {
-        //    $delete_form = new PhpFormBuilder();
-        //    $delete_form->set_att("method", "POST");
-        //    $delete_form->add_input("Enter Session ID to Delete:", array(
-        //        "type" => "number",
-        //    ), "delete_id");
-        //    $delete_form->build_form();
-        //    if (isset($_POST["delete_id"])) {
-        //        $db = get_mysqli_connection();
-        //        //$query1 = false;
-        //        //$query2 = false;
-    //
-        //        if (!empty($_POST["delete_id"])) {
-        //            echo "deleting by id...";
-        //            $query1 = $db->prepare("delete from PaypoolSession where SessionID = ?");
-        //            $query1->$bind_param("s", $_POST['delete_id']);
-        //            $query1->execute();
-        //            $_SESSION["affected_rows"] = $db->affected_rows;
-        //            $query2 = $db->prepare("delete from Joins where SessionID = ?");
-        //            $query2->$bind_param("s", $_POST['delete_id']);
-        //            $query2->execute();
-        //            $_SESSION["affected_rows"] = $db->affected_rows;
-        //            //header("Location: " . $_SERVER["PHP_SELF"]);
-        //        }
-        //    }
-        //}
-    ?>
+ 
 
     <h2></h2>
    
@@ -280,28 +252,80 @@
             echo "Additinal Error: " . mysqli_errno();
             echo "Even more errors: " . $query->error;
         }
-    ?> 
-    <h2></h2><h2></h2>
-    <?php
-        $db = get_mysqli_connection();
-        $query = $db->prepare("SELECT SessionID AS 'Joined Sessions\t', Percentage FROM Joins WHERE UserID = ? AND SessionID NOT IN (SELECTSessionID FROM PaypoolSession WHERE UserID = ?)");
-        $query->bind_param('ss', $_SESSION['userid'], $_SESSION['userid'] );
-        $query->execute();
-        $result = $query->get_result();
-        $rows = $result->fetch_all(MYSQLI_ASSOC);
-        echo makeTable($rows);
-        
-        if (!$query->get_result()) {
-            echo "Transactions from Joined Sessions:";
-            $query2 = $db->prepare("SELECT TransactionID, concat(FName,' ',LName) AS 'Member', SessionID, ItemPurchased, Price FROMTransaction NATURAL JOIN UserProfile WHERE SessionID IN (SELECT SessionID FROM Joins wherE UserID = ?) AND SessionID NOT IN(SELECT SessionID FROM PaypoolSession WHERE UserID = ?)");  
-            $query2->bind_param('ss', $_SESSION['userid'], $_SESSION['userid']);
-            $query2->execute();
-            $result2 = $query2->get_result();
-            $rows2 = $result2->fetch_all(MYSQLI_ASSOC);
-            echo makeTable($rows2);
+        ?>
+        <h2></h2><h2></h2>
+        <?php
+        //$insert_form = new PhpFormBuilder();
+        //$insert_form->set_att("method", "POST");
+        //$insert_form->add_input("Insert", array(
+        //    "type" => "submit",
+        //    "value" => "Create New Group"
+        //), "createbtn");
+        //$insert_form->build_form();
+//
+        //if (isset($_POST["createbtn"])) 
+        //{
+        //    $db = get_mysqli_connection();
+        //    $query = $db->prepare("INSERT INTO PaypoolSession (UserID) VALUES (?)");
+        //    $query->bind_param('s', $_SESSION['userid']);
+        //    if ($query->execute()){    
+        //        header( "Location: " . $_SERVER['PHP_SELF']);
+        //    }
+        //    else {
+        //        echo "Error inserting: " . mysqli_error();
+        //    }
+        //}
+
+        $delete_form = new PhpFormBuilder();
+        $delete_form->set_att("method", "POST");
+        $delete_form->add_input("Insert", array(
+            "type" => "submit",
+            "value" => "Delete this Paypool Session - WARNING: UNREVERSABLE"
+        ), "delete_id");
+        $delete_form->build_form();
+
+        if (isset($_POST["delete_id"])) 
+        {
+            $db = get_mysqli_connection();
+            $query2 = $db->prepare("DELETE FROM Joins WHERE SessionID = (?)");
+            $query2->bind_param("s", $_SESSION['SessionID']);
+            if($query2->execute())
+            {
+                $query2->close();
+                $_SESSION["affected_rows"] = $db->affected_rows;
+            } else {
+                echo "Error: " . mysqli_error();
+                echo "Additinal Error: " . mysqli_errno();
+                echo "Even more errors: " . $query2->error;
+            }
+
+            $query3 = $db->prepare("UPDATE Transaction SET SessionID = 1 WHERE SessionID = (?)");
+            $query3->bind_param("s", $_SESSION['SessionID']);
+            if($query3->execute())
+            {
+                $query3->close();
+                $_SESSION['affected_rows'] = $db->affected_rows;
+            } else {
+                echo "Error: " . mysqli_error();
+                echo "Additinal Error: " . mysqli_errno();
+                echo "Even more errors: " . $query3->error;
+            }
+
+            $query1 = $db->prepare("delete from PaypoolSession where SessionID = ?");
+            $query1->bind_param("s", $_SESSION['SessionID']);
+            if($query1->execute())
+            {
+                $query1->close();
+                $_SESSION["affected_rows"] = $db->affected_rows;
+                $_SESSION['SessionID'] = NULL;
+                header("Location: dashboard.php");
+            } else {
+                echo "Error: " . mysqli_error();
+                echo "Additinal Error: " . mysqli_errno();
+                echo "Even more errors: " . $query1->error;
+            }
         }
-                    //php logic to populate with current logged in user sessions
-    ?>
+    ?> 
     </div>
 
 </body>
