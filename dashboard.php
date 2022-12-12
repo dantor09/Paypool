@@ -3,6 +3,18 @@
     if(!isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == false){
     header("Location: signin.php");
     }
+    
+    if(!$_SESSION['userid']) 
+    {
+        $db = get_mysqli_connection();
+        $stmt = $db->prepare("SELECT * FROM UserProfile WHERE Email = ?");
+        $stmt->bind_param("s", $_SESSION['email']);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $data = $result->fetch_assoc();
+        $_SESSION['userid'] = $data['UserID'];
+        $stmt->close();
+    }
 ?>
 
 <html>
