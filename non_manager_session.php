@@ -147,28 +147,7 @@
         $totalquery = $db->prepare("SELECT SUM((Transaction.Price)* ((Joins.Percentage)/100)) AS 'Total'  
             FROM Joins 
             JOIN Transaction ON(Transaction.UserID = Joins.UserID)  
-            WHERE Joins.SessionID = 36  AND  Transaction.SessionID = 36");
-        $totalquery->bind_param("ss", $_SESSION['SessionID'], $_SESSION['SessionID']);
-
-        if($totalquery->execute())
-        {
-            $result = $totalquery->get_result();
-            $data = $result->fetch_all(MYSQLI_ASSOC);
-            $totaldue = number_format($data[0]['Total'],2);
-            $totalquery->close();
-        } 
-        else 
-        {
-            echo "Error: " . mysqli_error();
-            echo "Additinal Error: " . mysqli_errno();
-            echo "Even more errors: " . $totalquery->error;
-        }
-
-        $db = get_mysqli_connection();
-        $totalquery = $db->prepare("SELECT SUM((Transaction.Price)* ((Joins.Percentage)/100)) AS 'Total'  
-            FROM Joins 
-            JOIN Transaction ON(Transaction.UserID = Joins.UserID)  
-            WHERE Joins.SessionID = 36  AND  Transaction.SessionID = 36");
+            WHERE Joins.SessionID = ? AND  Transaction.SessionID = ?");
         $totalquery->bind_param("ss", $_SESSION['SessionID'], $_SESSION['SessionID']);
 
         if($totalquery->execute())
