@@ -86,6 +86,8 @@ if (isset($_POST['submit'])){
             
             $_SESSION['logged_in'] = true;
             $_SESSION['fname'] = $fname;
+            $_SESSION['lname'] = $lname;
+            $_SESSION['email'] = $email;
             header("Location: dashboard.php");
         } else {
             Echo "Error entering information into database<br><br>";
