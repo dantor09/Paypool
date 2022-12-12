@@ -39,15 +39,17 @@
             echo "Welcome, $fname $lname!";
         ?>
     </h2>
+    <hr>
 
-    <h2>Create a Session</h2>
+<div id="createSessionDiv">
     <?php
         $insert_form = new PhpFormBuilder();
         $insert_form->set_att("method", "POST");
         $insert_form->add_input("Insert", array(
             "type" => "submit",
-            "value" => "Create New Group"
+            "value" => "Create New Session"
         ), "createbtn");
+
         $insert_form->build_form();
 
         if (isset($_POST["createbtn"])) 
@@ -63,10 +65,15 @@
             }
         }
     ?>
+</div>
 
-    <div class="">
-        <h2>My Sessions</h2>
-        <?php
+<hr>
+
+    <h2>My Sessions</h2>
+    <div class="sessionContainer">
+        <div class="mySessions">
+            <div class="inSession"> 
+            <?php
             $db = get_mysqli_connection();
             $query = $db->prepare("SELECT SessionID AS 'Managed Sessions\t', Percentage AS 'Percentage' FROM Joins WHERE UserID = ? AND SessionID IN (SELECT SessionID FROM PaypoolSession WHERE UserID = ?)");
             $query->bind_param('ss', $_SESSION['userid'], $_SESSION['userid'] );
@@ -74,9 +81,11 @@
             $result = $query->get_result();
             $rows = $result->fetch_all(MYSQLI_ASSOC);
             echo makeTable($rows);
-        ?>
-        <h2></h2><h2></h2>
-        <?php
+            ?>
+            </div>
+
+            <div class="inSession">
+            <?php
             $db = get_mysqli_connection();
             $query = $db->prepare("SELECT SessionID AS 'Joined Sessions\t', Percentage FROM Joins WHERE UserID = ? AND SessionID NOT IN (SELECT SessionID FROM PaypoolSession WHERE UserID = ?)");
             $query->bind_param('ss', $_SESSION['userid'], $_SESSION['userid'] );
@@ -85,20 +94,22 @@
             $rows = $result->fetch_all(MYSQLI_ASSOC);
             echo makeTable($rows);
             $query->close();
-        ?>
-    
-        <?php 
+            ?>
+            </div>
+        </div>
+        <div id="enterSession">
+            <?php 
             //php to display certain users 
             $session_form = new phpFormBuilder();
             $session_form->set_att("method","POST");
+            $session_form->add_input("Session Number:", array(
+                "type" => "text",
+                "placeholder" => "Enter a session ID to enter"
+            ), "enter_session");
             $session_form->add_input("Session", array(
                 "type" => "submit",
                 "value" => "Enter Session"
             ), "sessionbtn");
-            $session_form->add_input("Session to enter", array(
-                "type" => "text",
-                "placeholder" => "Enter a session ID to enter"
-            ), "enter_session");
             $session_form->build_form();
 
             if(!empty($_POST['enter_session']))
@@ -149,10 +160,8 @@
                     echo "You are not in session " . $_POST['enter_session'];
                 }    
             }
-        ?>
-
-        <h2></h2><h2></h2>
-    
+            ?>
+        </div>
     </div>
 </body>
 </html>

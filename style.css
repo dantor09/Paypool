@@ -40,7 +40,7 @@ nav {
 	margin-right: 10%;
 }
 
-.input_areas {
+.input_areas, #enter_session {
 	margin-bottom: 15px;
 	width: 100%;
 }
@@ -90,4 +90,45 @@ nav {
 
 .nav_btn:active {
 	background-color: slategray;
+}
+
+#createbtn {
+	margin-top: 10px;
+	margin-bottom: -10px;
+	background-color: #1d2222;
+	color: white;
+	padding: 25px 75px;
+	font-size: 18;
+	cursor: pointer;
+	border-radius: 15px;
+}
+
+#createbtn:hover {
+	background-color: gray;
+}
+
+#createSessionDiv {
+	display: flex;
+	justify-content: center;
+}
+
+.mySessions {
+	display: flex;
+	justify-content: space-around;
+}
+
+.inSession {
+	padding: 10px 25px;
+	border-radius: 15px;
+
+}
+
+#enterSession {
+	margin-top: 20px;
+	display: flex;
+	justify-content: center;
+}
+
+#emailPlaceholder {
+	width: 30%;
 }

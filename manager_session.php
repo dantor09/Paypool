@@ -280,7 +280,7 @@
         $delete_form->set_att("method", "POST");
         $delete_form->add_input("Insert", array(
             "type" => "submit",
-            "value" => "Delete this Paypool Session - WARNING: UNREVERSABLE"
+            "value" => "Delete this Paypool Session - WARNING: IRREVERSIBLE"
         ), "delete_id");
         $delete_form->build_form();
 
