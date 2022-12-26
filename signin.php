@@ -82,7 +82,7 @@
     ?>
     </div>
 
-    <?php> 
+    <?php
 
         echo "Este es el cambio que hice";
      ?>
