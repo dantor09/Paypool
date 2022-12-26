@@ -82,5 +82,9 @@
     ?>
     </div>
 
+    <?php> 
+
+        echo "Este es el cambio que hice";
+     ?>
 </body>
 </html>
