@@ -4,7 +4,7 @@
     header("Location: signin.php");
     }
     
-    if(!$_SESSION['userid']) 
+   /* if(!$_SESSION['userid']) 
     {
         $db = get_mysqli_connection();
         $stmt = $db->prepare("SELECT * FROM UserProfile WHERE Email = ?");
@@ -14,7 +14,7 @@
         $data = $result->fetch_assoc();
         $_SESSION['userid'] = $data['UserID'];
         $stmt->close();
-    }
+    }*/
 ?>
 
 <html>
