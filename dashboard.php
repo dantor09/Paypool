@@ -1,20 +1,8 @@
 <?php
     require_once("config.php");
-    if(!isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == false){
+    if(!isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == false) { // Redirect to sign in page if NOT logged in
     header("Location: signin.php");
     }
-    
-   /* if(!$_SESSION['userid']) 
-    {
-        $db = get_mysqli_connection();
-        $stmt = $db->prepare("SELECT * FROM UserProfile WHERE Email = ?");
-        $stmt->bind_param("s", $_SESSION['email']);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $data = $result->fetch_assoc();
-        $_SESSION['userid'] = $data['UserID'];
-        $stmt->close();
-    }*/
 ?>
 
 <html>
@@ -23,12 +11,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="style.css">
     <title>Dashboard | <?= $PROJECT_NAME?></title>
-
 </head>
 <body>
-
     <div class>
-        <a href="signin.php"><img src="payool_logo.png" id="logo"/></a>
+        <a href="signin.php"><img id="logo" src="payool_logo.png" /></a>
         <?php require_once("nav.php");?>
     </div>
 
