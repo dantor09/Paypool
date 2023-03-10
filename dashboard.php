@@ -20,10 +20,9 @@
 
     <h2>
         <?php
-            //$fname = $_SESSION['fname'];
-            //$lname = $_SESSION['lname'];
-            
-            echo "Welcome, $_SESSION['fname'] $_SESSION['lname'] !";
+            $fname = $_SESSION['fname'];
+            $lname = $_SESSION['lname'];
+            echo "Welcome, $fname $lname !";
         ?>
     </h2>
     <hr>
