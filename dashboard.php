@@ -15,14 +15,15 @@
 <body>
     <div class>
         <a href="signin.php"><img id="logo" src="payool_logo.png" /></a>
-        <?php require_once("nav.php");?>
+        <?php require_once("nav.php"); ?>                                   <! -- Display navigation links -->                                 
     </div>
 
     <h2>
         <?php
-            $fname = $_SESSION['fname'];
-            $lname = $_SESSION['lname'];
-            echo "Welcome, $fname $lname!";
+            //$fname = $_SESSION['fname'];
+            //$lname = $_SESSION['lname'];
+            
+            echo "Welcome, $_SESSION['fname'] $_SESSION['lname'] !";
         ?>
     </h2>
     <hr>
