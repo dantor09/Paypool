@@ -22,59 +22,60 @@
     $confirmpwordvalid=true;
     $validpassword=false;
 
-if (isset($_POST['submit'])){
+if(isset($_POST['submit'])) {
 
-
-    if (empty($_POST["fname"])) {
+    if(empty($_POST["fname"])) {
         $fnamevalid = false;
-      $fnameerr = "First Name is required";
-    } else {
-      $fname = cleaninput($_POST["fname"]);
+    	$fnameerr = "First Name is required";
+    } 
+    else {
+    	$fname = cleaninput($_POST["fname"]);
     }
 
     if (empty($_POST["lname"])) {
         $lnamevalid = false;
-      $lnameerr = "Last Name is required";
-    } else {
-      $lname = cleaninput($_POST["lname"]);
+        $lnameerr = "Last Name is required";
+    } 
+    else {
+    	$lname = cleaninput($_POST["lname"]);
     }
-
-    
-    
+	
     if (empty($_POST["email"])) {
-        $emailvalid=false;
-      $emailerr = "Email is required";
-    } else {
-      $email = cleaninput($_POST["email"]);
+    	$emailvalid=false;
+        $emailerr = "Email is required";
+    } 
+    else {
+    	$email = cleaninput($_POST["email"]);
     }
-      
-  
+	
     if (empty($_POST["pword"])) {
         $pwordvalid=false;
-      $pworderr = "Password is required";
-    } else {
-      $pword = cleaninput($_POST["pword"]);
+        $pworderr = "Password is required";
+    } 
+    else {
+    	$pword = cleaninput($_POST["pword"]);
     }
   
     if (empty($_POST["confirmpword"])) {
         $confirmpwordvalid=false;
-      $confirmpworderr = "Confirmed password is required";
-    } else {
-      $confirmedpword = cleaninput($_POST["confirmpword"]);
+        $confirmpworderr = "Confirmed password is required";
+    } 
+    else {
+    	$confirmedpword = cleaninput($_POST["confirmpword"]);
     }
-
-    if($pwordvalid && $confirmedpword){
-        if(strcmp($pword,$confirmedpword) == 0){
+	
+    if($pwordvalid && $confirmedpword) {
+        if(strcmp($pword,$confirmedpword) == 0) {
             $validpassword = true;
             $hashed = password_hash($pword, PASSWORD_DEFAULT);
             echo "Both passwords are the same and is valid, thank you!<br>";
-        } else{
+        } 
+	else {
             $validpassword = false;
             echo "Passwords are not the same<br>";
         }
     }
 
-    
     if($validpassword) {
             Echo "All entries are valid. Ready to enter info into database<br>";
 
@@ -93,7 +94,6 @@ if (isset($_POST['submit'])){
             Echo "Error entering information into database<br><br>";
             var_dump($db->error);
             echo "<br><br>";
-
             var_dump($update);
         } 
     } 
