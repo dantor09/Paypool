@@ -30,7 +30,7 @@
     <hr>
     <div id="createSessionDiv">
         <?php
-            $insert_form = new PhpFormBuilder();                        // Create form 
+            $insert_form = new phpFormBuilder();                        // Create form 
             $insert_form->set_att("method", "POST");                    // Post Method 
             $insert_form->add_input("Insert", array(                    
                 "type" => "submit",
@@ -54,21 +54,27 @@
         ?>
     </div>
     <hr>
-    <h2>My paypool sessions</h2>
+    <h2>Paypool Sessions</h2>
 
     <div class="sessionContainer">
         <div class="mySessions">
             <div class="inSession"> 
-
                 <?php
                 // Query the Session ID's of the Session ID's the user is manager of and the percentage value too 
                 $db = get_mysqli_connection();
-                $query = $db->prepare("SELECT SessionID AS 'Managed Sessions\t', Percentage AS 'Percentage' FROM Joins WHERE UserID = ? AND SessionID IN (SELECT SessionID FROM PaypoolSession WHERE UserID = ?)");
+                $query = $db->prepare("SELECT SessionID AS 'Sessions', Percentage AS 'Percentage' FROM Joins WHERE UserID = ? AND SessionID IN (SELECT SessionID FROM PaypoolSession WHERE UserID = ?)");
                 $query->bind_param('ss', $_SESSION['userid'], $_SESSION['userid'] );
                 $query->execute();
                 $result = $query->get_result();
                 $rows = $result->fetch_all(MYSQLI_ASSOC);
-                echo makeTable($rows);                      // Make a table and display the information retrieved 
+                if($rows == null) { // If there are no sessions that the user is a manager of 
+                    echo "You are not a manager of any sessions";
+                }
+                else {
+                    echo "<h2>Managed</h2>";
+                    echo makeTable($rows);                      // Make a table and display the information retrieved 
+                }
+                $query->close();            // Close the query
                 ?>
             </div>
 
@@ -81,7 +87,12 @@
                 $query->execute();
                 $result = $query->get_result();
                 $rows = $result->fetch_all(MYSQLI_ASSOC);
-                echo makeTable($rows);
+                if($rows == null) { // If there are no sessions that the user is a manager of 
+                    echo "You have not joined any sessions";
+                }
+                else {
+                    echo "<h2>Joined</h2>";
+                }
                 $query->close();            // Close the query
                 ?>
             </div>
@@ -93,14 +104,15 @@
             //Build form/button to enter a specified session  
             $session_form = new phpFormBuilder();
             $session_form->set_att("method", "POST");
-            $session_form->add_input("Session number:", array(
+            $session_form->add_input("", array(
                 "type" => "text",
                 "placeholder" => "Enter a session ID",
-                "class" => "other"
+                "class" => "sessionInput",
             ), "enter_session");
             $session_form->add_input("Session", array(
                 "type" => "submit",
-                "value" => "Enter Session"
+                "value" => "Enter Session",
+                "class" => "sessionbtn"
             ), "sessionbtn");
             $session_form->build_form();
 

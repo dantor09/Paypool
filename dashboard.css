@@ -2,11 +2,10 @@
 ::before,
 ::after {
     box-sizing: border-box;
-   /* border: 1px solid black;*/
 }
 
 body {
-    background: linear-gradient(90deg, #585858 0%, #ffffff 50%, #3a3a3a 100%);
+    background: linear-gradient(180deg, #ffffff 0%, #c5c5c5 30%, #3a3a3a 100%);
 }
 
 .sessionContainer {
@@ -16,12 +15,25 @@ body {
 .mySessions {
 	display: flex;
 	justify-content: space-around;
-    background-color: purple;
 }
 
 .inSession {
 	padding: 10px 25px;
 	border-radius: 15px;
-    background-color: white;
+}
+.inSession > h2 {
+    margin-top: 0px;
+    text-align: center;
+}
 
+.sessionInput {
+    padding: 10px;
+    margin: 0px;
+}
+.sessionbtn {
+    display: block;
+    margin: 0 auto;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
 }

@@ -16,7 +16,7 @@ function makeTable($data, $showHeader = true) {
         }
         $tableStr .= "<tr>";
         foreach($row as $columnName => $columnValue) {
-            $tableStr .= sprintf("<td style='padding-left: 5px; padding-right: 5px;>%s</td>", $columnValue);
+            $tableStr .= sprintf("<td style='padding-left: 5px; padding-right: 5px;' >%s</td>", $columnValue);
         }
         $tableStr .= "</tr>";
     }
