@@ -1,0 +1,27 @@
+*,
+::before,
+::after {
+    box-sizing: border-box;
+   /* border: 1px solid black;*/
+}
+
+body {
+    background: linear-gradient(90deg, #585858 0%, #ffffff 50%, #3a3a3a 100%);
+}
+
+.sessionContainer {
+    border: 1px solid black;
+    border-radius: 10px;
+}
+.mySessions {
+	display: flex;
+	justify-content: space-around;
+    background-color: purple;
+}
+
+.inSession {
+	padding: 10px 25px;
+	border-radius: 15px;
+    background-color: white;
+
+}

@@ -10,12 +10,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="dashboard.css">
     <title>Dashboard | <?= $PROJECT_NAME?></title>
 </head>
 <body>
-    <div class>
+    <main>
+    <div>
         <a href="signin.php"><img id="logo" src="payool_logo.png" /></a>
-        <?php require_once("nav.php"); ?>                                   <! -- Display navigation links -->                                 
+        <?php require_once("nav.php"); ?>                               
     </div>
 
     <h2>
@@ -52,7 +54,7 @@
         ?>
     </div>
     <hr>
-    <h2>My Sessions</h2>
+    <h2>My paypool sessions</h2>
 
     <div class="sessionContainer">
         <div class="mySessions">
@@ -87,12 +89,14 @@
 
         <div id="enterSession">
             <?php 
+
             //Build form/button to enter a specified session  
             $session_form = new phpFormBuilder();
-            $session_form->set_att("method","POST");
-            $session_form->add_input("Session Number:", array(
+            $session_form->set_att("method", "POST");
+            $session_form->add_input("Session number:", array(
                 "type" => "text",
-                "placeholder" => "Enter a session ID to enter"
+                "placeholder" => "Enter a session ID",
+                "class" => "other"
             ), "enter_session");
             $session_form->add_input("Session", array(
                 "type" => "submit",
@@ -153,5 +157,6 @@
             ?>
         </div>
     </div>
+        </main>
 </body>
 </html>
