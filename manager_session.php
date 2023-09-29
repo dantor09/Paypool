@@ -106,7 +106,7 @@
         if($query->execute()) {
             $result = $query->get_result();
             $rows = $result->fetch_all(MYSQLI_ASSOC);
-            echo "You have " . count($rows) . " users in session: " . $_SESSION['SessionID'];
+            echo "You have " . count($rows) . " user(s) in session: " . $_SESSION['SessionID'];
             echo makeTable($rows);
             $query->close();
             echo "<br><br>";
@@ -118,7 +118,7 @@
         }
     ?>
 
-    <form method="POST">
+    <form  method="POST">
         <label for="category">Transaction Category:</label>
         <select name="category" id="category">
             <option value="food">Food</option>
@@ -134,10 +134,10 @@
 
         <label for="item">Item: </label>
         <input type="text" placeholder="Tacos" name = "item"><br> 
-
+        
         <label for="price">Price: </label>
         <input type="text" placeholder = "4.00" name = "price"><br>
-
+    
         <!--there is a default for today, have if statement to default if nothing is entered -->
         <label>Date of Transaction: </label>
         <input type="datetime-local" id="test_datetimelocal" name = "date" ><br>
@@ -167,8 +167,6 @@
         }
     ?>
     <br>
-    <div class="">
- 
 
     <h2></h2>
    
@@ -267,7 +265,6 @@
             }
         }
     ?> 
-    </div>
     
     <?php  
 

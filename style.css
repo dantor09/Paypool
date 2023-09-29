@@ -132,3 +132,7 @@ nav {
 #emailPlaceholder {
 	width: 30%;
 }
+
+body > div.manager-food {
+	background-color: purple;
+}
