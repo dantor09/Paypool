@@ -11,36 +11,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Session <?= $_SESSION['SessionID']?> | <?= $PROJECT_NAME?></title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="manager_session.css">
 
 </head>
 <body>
 
-    <div class>
+    <div>
         <a href="signin.php"><img src="payool_logo.png" id="logo"/></a>
-        <?php
-                require_once("nav.php");
-        ?>
+        <?php require_once("nav.php");?>
     </div>
-    <h2>
     <?php
         $fname = $_SESSION['fname'];
         $lname = $_SESSION['lname'];
     ?>
-    </h2>
-    <?php 
-        echo "<H2> You are the manager of this session </H2> <br>";
-    ?>
+    <h2> You are the manager of this session </h2> <br>
     <?php
         $add_user_form = new PhpFormBuilder();
         $add_user_form->set_att("method", "POST");
-        $add_user_form->add_input("usermail", array(
-            "type" => "submit",
-            "value" => "Add by Email"
-        ), "email_button");
-        $add_user_form-> add_input("Friend's Email", array(
+        
+        $add_user_form-> add_input("", array(
             "type" => "text",
             "placeholder" => "Enter email"
         ), "email_input");
+        $add_user_form->add_input("usermail", array(
+            "type" => "submit",
+            "value" => "Add User"
+        ), "email_button");
         $add_user_form->build_form();
         
         if(!empty($_POST['email_input']) && isset($_POST['email_button'])) {
@@ -90,6 +86,8 @@
             else {
                 echo "User does not exist <br>";
             }
+
+            
 
         }
         $db = get_mysqli_connection();
@@ -313,7 +311,6 @@
         echo "<h2>Total Each Member Owes to Session: $"; 
         echo $totaldue;
         echo"</h2>";
-    ?> 
-
+    ?>
 </body>
 </html>
