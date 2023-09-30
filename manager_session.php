@@ -15,7 +15,17 @@
 
 </head>
 <body>
-
+    <?php 
+        function display_session_text($users_in_session_count) {
+            $text = "You have " . $users_in_session_count;
+            if ($users_in_session_count > 1) {
+                return $text . " users in session: " . $_SESSION['SessionID'];
+            }
+            else {
+                return $text . " user in session " . $_SESSION['SessionID'];
+            }
+        }
+    ?>
     <div>
         <a href="signin.php"><img src="payool_logo.png" id="logo"/></a>
         <?php require_once("nav.php");?>
@@ -26,19 +36,6 @@
     ?>
     <h2> You are the manager of this session </h2> <br>
     <?php
-        $add_user_form = new PhpFormBuilder();
-        $add_user_form->set_att("method", "POST");
-        
-        $add_user_form-> add_input("", array(
-            "type" => "text",
-            "placeholder" => "Enter email"
-        ), "email_input");
-        $add_user_form->add_input("usermail", array(
-            "type" => "submit",
-            "value" => "Add User"
-        ), "email_button");
-        $add_user_form->build_form();
-        
         if(!empty($_POST['email_input']) && isset($_POST['email_button'])) {
             $db = get_mysqli_connection();
             $query_first_name = $db->prepare("SELECT FName 
@@ -86,10 +83,20 @@
             else {
                 echo "User does not exist <br>";
             }
-
-            
-
         }
+        $add_user_form = new PhpFormBuilder();
+        $add_user_form->set_att("method", "POST");
+        
+        $add_user_form-> add_input("", array(
+            "type" => "text",
+            "placeholder" => "Enter email"
+        ), "email_input");
+        $add_user_form->add_input("usermail", array(
+            "type" => "submit",
+            "value" => "Add User"
+        ), "email_button");
+        $add_user_form->build_form();
+        
         $db = get_mysqli_connection();
         $update_percentage = $db->prepare("CALL UpdatePercentages(?)");
         $update_percentage->bind_param('s', $_SESSION['SessionID']);
@@ -104,8 +111,8 @@
         if($query->execute()) {
             $result = $query->get_result();
             $rows = $result->fetch_all(MYSQLI_ASSOC);
-            echo "You have " . count($rows) . " user(s) in session: " . $_SESSION['SessionID'];
-            echo makeTable($rows);
+            echo "<div class='users_in_session'>" . display_session_text(count($rows)) . "</div>";
+            echo "<div class='members_table text_output'>" . makeTable($rows) . "</div>";
             $query->close();
             echo "<br><br>";
         }
@@ -140,7 +147,7 @@
         <label>Date of Transaction: </label>
         <input type="datetime-local" id="test_datetimelocal" name = "date" ><br>
 
-        <input type="submit" value="Submit" name = "Submit">
+        <input type="submit" value="Create PayPool transaction" name = "Submit">
         <br>
     </form>
 
@@ -197,7 +204,7 @@
             $result = $query->get_result();
             $rows = $result->fetch_all(MYSQLI_ASSOC);
             if(count($rows) > 1 || count($rows) == 0) {
-                echo "There are " . count($rows) . " transactions";
+                echo "<div class='text_output'> There are " . count($rows) . " transactions </div>";
             }
             else { 
                 echo "There is " . count($rows) . " transaction";

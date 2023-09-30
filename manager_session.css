@@ -2,6 +2,7 @@
 ::before,
 ::after {
   box-sizing: border-box;
+  color: black;
   /*border: 1px solid black;*/
 }
 body {
@@ -12,6 +13,10 @@ body {
 }
 form {
     text-align: center;
+    width: 100%;
+    border-radius: 5px;
+    background: linear-gradient(to bottom, #9b9696 0%, #696767 100%);
+    box-shadow: 5px 5px 10px rgba(5,5,5,0.5);
 }
 input {
     margin: 10px;
@@ -25,4 +30,23 @@ input[type="submit"] {
     font-weight: bold;
     font-family: sans-serif;
     border-radius: 10px;
+}
+.users_in_session, .text_output {
+    box-shadow: 5px 5px 10px rgba(5,5,5,0.5);
+    background: linear-gradient(to bottom, #9b9696 0%, #696767 100%);
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    height: 50px;
+    font-weight: bold;
+    border-radius: 5px;
+    color: rgb(0, 0, 0);
+}
+
+.members_table {
+    display: flex;
+    justify-content: center;
+    border-collapse: collapse;
+    height: unset;
 }
