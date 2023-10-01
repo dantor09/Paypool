@@ -44,7 +44,7 @@ input[type="submit"] {
     color: rgb(0, 0, 0);
 }
 
-.members_table {
+.members_table, .transactions_table {
     display: flex;
     justify-content: center;
     border-collapse: collapse;
