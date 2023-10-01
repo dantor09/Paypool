@@ -3,6 +3,7 @@
     if(!isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == false) {
     header("Location: signin.php");
     }
+    $db = get_mysqli_connection();
 ?>
 
 <html>
@@ -37,46 +38,38 @@
     <h2> You are the manager of this session </h2> <br>
     <?php
         if(!empty($_POST['email_input']) && isset($_POST['email_button'])) {
-            $db = get_mysqli_connection();
-            $query_first_name = $db->prepare("SELECT FName 
+            $query_incoming_user = $db->prepare("SELECT UserID, FName, Email
             FROM UserProfile 
             WHERE Email = ?");
-            $query_first_name->bind_param('s',$_POST['email_input']);
-            $query_first_name->execute();
-            $result = $query_first_name->get_result();
-            $first_name = $result->fetch_all(MYSQLI_ASSOC);
-            if(!empty($first_name)) {
-                $db = get_mysqli_connection();
-                $already_in_session = $db->prepare("SELECT FName FROM Joins Join UserProfile ON(Joins.UserID = UserProfile.UserID) WHERE SessionID = ?");
+            $query_incoming_user->bind_param('s',$_POST['email_input']);
+            $query_incoming_user->execute();
+            $result = $query_incoming_user->get_result();
+            $incoming_user = $result->fetch_all(MYSQLI_ASSOC);
+            if(!empty($incoming_user)) {
+                $already_in_session = $db->prepare("SELECT FName, Email FROM Joins Join UserProfile ON(Joins.UserID = UserProfile.UserID) WHERE SessionID = ?");
                 $already_in_session->bind_param('s', $_SESSION['SessionID']);
                 $already_in_session->execute();
                 $result2 =  $already_in_session->get_result();
-                $row_names = $result2->fetch_all(MYSQLI_ASSOC);
+                $row_email = $result2->fetch_all(MYSQLI_ASSOC);
                 $found = false;
                 $index_count = 0;
                 //while statement to make add everyone listed
-                while($index_count < count($row_names) && !$found) {
-                    if($row_names[$index_count]['FName'] == $first_name[0]['FName']) {
+                while($index_count < count($row_email) && !$found) {
+                    if($row_email[$index_count]['Email'] == $incoming_user[0]['Email']) {
                         $found = true;
                     }
                     $index_count++;
                 }
+                
                 //check to see if user is in the session already
                 if($found) {
                     echo "User is already in this paypool session <br>";
                 }
-                else {
-                    $db = get_mysqli_connection();
-                    $name = $db->prepare("SELECT UserID FROM UserProfile WHERE FName = ?");
-                    $name->bind_param('s', $first_name[0]['FName']);
-                    $name->execute();
-                    $result = $name->get_result();
-                    $user_id = $result->fetch_all(MYSQLI_ASSOC);
-                    $name->close();
+                else {     
                     $query = $db->prepare("CALL AddUserToSession(?,?)");
-                    $query->bind_param('ss', $user_id[0]['UserID'], $_SESSION['SessionID']);
+                    $query->bind_param('ss', $incoming_user[0]['UserID'], $_SESSION['SessionID']);
                     $query->execute();
-                    echo $first_name[0]['FName']. " was added successfully <br>";
+                    echo $incoming_user[0]['FName']. " was added successfully <br>";
                     $query->close();
                 }
             }   
@@ -97,7 +90,6 @@
         ), "email_button");
         $add_user_form->build_form();
         
-        $db = get_mysqli_connection();
         $update_percentage = $db->prepare("CALL UpdatePercentages(?)");
         $update_percentage->bind_param('s', $_SESSION['SessionID']);
         $update_percentage->execute();
@@ -105,7 +97,6 @@
     ?>
 
     <?php  
-        $db = get_mysqli_connection();
         $query = $db->prepare("CALL GetMembers(?)");
         $query->bind_param('s', $_SESSION['SessionID']);
         if($query->execute()) {
@@ -158,7 +149,6 @@
                 $_POST["date"] = date('Y-m-d H:i');
             }
         
-            $db = get_mysqli_connection();
             $stmt = $db->prepare("CALL AddTransaction (?,?,?,?,?,?)");
             $stmt->bind_param('sssssd',$_SESSION['userid'], $_SESSION['SessionID'], $_POST['category'], $_POST["date"],$_POST["item"], $_POST["price"]);
             if($stmt->execute()) {    
@@ -190,14 +180,12 @@
         $remove_transaction_form->build_form();
         
         if(!empty($_POST['transaction_input']) && isset($_POST['remove_transaction_button'])) {
-            $db = get_mysqli_connection();
             $remove_transaction = $db->prepare("CALL RemoveTransaction(?,?)");
             $remove_transaction->bind_param('ss',$_POST['transaction_input'], $_SESSION['SessionID']);
             $remove_transaction->execute();
         }
     ?> 
      <?php  
-        $db = get_mysqli_connection();
         $query = $db->prepare("CALL GetTransactions(?)");        
         $query->bind_param('s', $_SESSION['SessionID']);
         if($query->execute()) {
@@ -229,7 +217,6 @@
         $delete_form->build_form();
 
         if (isset($_POST["delete_id"])) {
-            $db = get_mysqli_connection();
             $query2 = $db->prepare("DELETE FROM Joins WHERE SessionID = (?)");
             $query2->bind_param("s", $_SESSION['SessionID']);
             
@@ -272,11 +259,6 @@
     ?> 
     
     <?php  
-
-        //$_SESSION['userid']
-        //$_SESSION['SessionID']
-
-        $db = get_mysqli_connection();
         $totalquery = $db->prepare("SELECT SUM((Transaction.Price)* ((Joins.Percentage)/100)) AS 'Total'  
             FROM Joins 
             JOIN Transaction ON(Transaction.UserID = Joins.UserID)  
@@ -318,6 +300,9 @@
         echo "<h2>Total Each Member Owes to Session: $"; 
         echo $totaldue;
         echo"</h2>";
+    ?>
+    <?php 
+        $db->close();
     ?>
 </body>
 </html>
