@@ -92,6 +92,7 @@
                 }
                 else {
                     echo "<h2>Joined</h2>";
+                    echo makeTable($rows);                      // Make a table and display the information retrieved
                 }
                 $query->close();            // Close the query
                 ?>
