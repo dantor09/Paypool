@@ -37,3 +37,22 @@ body {
     border-radius: 5px;
     cursor: pointer;
 }
+
+@media screen and (max-width: 800px) {
+    nav {
+        flex-direction: column;
+        height: 200px;
+    }
+    nav > * {
+        padding: 0px;
+    }
+    #logo {
+        height: 75px;
+        width: 300px;
+    }
+    .mySessions {
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+    }
+}
