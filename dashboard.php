@@ -144,6 +144,7 @@
                 $name = getManagerName($_POST['enter_session']);
                 $_SESSION['manager_first_name'] = $name[0];
                 $_SESSION['manager_last_name'] = $name[1];
+                $_SESSION['SessionID'] = $_POST['enter_session'];
                 
                 if($user_is_manager) {
                     header("Location: manager_session.php");
