@@ -2,10 +2,11 @@
 ::before,
 ::after {
     box-sizing: border-box;
+    color: black;
 }
 
 body {
-    background: linear-gradient(180deg, #ffffff 0%, #c5c5c5 30%, #3a3a3a 100%);
+    background: linear-gradient(180deg, #ffffff 0%, #c5c5c5 65%, #3a3a3a 100%);
 }
 
 .sessionContainer {
