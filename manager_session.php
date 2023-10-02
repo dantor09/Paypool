@@ -12,7 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Session <?= $_SESSION['SessionID']?> | <?= $PROJECT_NAME?></title>
     <link rel="stylesheet" href="./assets/css/style.css">
-    <link rel="stylesheet" href="manager_session.css">
+    <link rel="stylesheet" href="./assets/css/manager_session.css">
 
 </head>
 <body>
