@@ -50,3 +50,16 @@ input[type="submit"] {
     border-collapse: collapse;
     height: unset;
 }
+@media screen and (max-width: 800px) {
+    nav {
+        flex-direction: column;
+        height: 200px;
+    }
+    nav > * {
+        padding: 0px;
+    }
+    #logo {
+        height: 75px;
+        width: 300px;
+    }
+}
