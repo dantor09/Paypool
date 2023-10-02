@@ -3,6 +3,10 @@
     if(!isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == false) {
     header("Location: signin.php");
     }
+    if($_SESSION['is_manager'] == false) {
+        header("Location: dashboard.php");
+    }
+    
     $db = get_mysqli_connection();
 ?>
 

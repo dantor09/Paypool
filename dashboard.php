@@ -87,7 +87,7 @@
         if (isset($_POST["submitSession"])) {                             // If button is pressed
             $query = $db->prepare("INSERT INTO PaypoolSession (userId, name, createdAt) VALUES (?, ?, NOW())");    // Prepare a query to make new paypool session
             $query->bind_param('ss', $_SESSION['userid'], $_POST['sessionName']);           // Pass the user id of the person logged in, to the query parameter
-            
+
             if ($query->execute()) {header( "Location: " . $_SERVER['PHP_SELF']);}
             else { echo "Error inserting: " . mysqli_error();}
         }
@@ -172,9 +172,11 @@
                 $_SESSION['GroupName'] = getGroupName($_POST['enter_session']);
                 
                 if($user_is_manager) {
+                    $_SESSION['is_manager'] = true;
                     header("Location: manager_session.php");
                 }
                 else {
+                    $_SESSION['is_manager'] = false;
                     header("Location: non_manager_session.php");
                 }
             }
