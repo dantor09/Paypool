@@ -1,6 +1,15 @@
 <?php
     require_once "config.php";
-  
+    function getUserId($email) {
+        $db = get_mysqli_connection();
+        $stmt = $db->prepare("SELECT UserID FROM UserProfile WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $stmt->bind_result($user_id);
+        $stmt->fetch();
+        $stmt->close();
+        return $user_id;
+    }
     $fname = null;
     $lname = null;
     $email = null;
@@ -89,6 +98,7 @@ if(isset($_POST['submit'])) {
             $_SESSION['fname'] = $fname;
             $_SESSION['lname'] = $lname;
             $_SESSION['email'] = $email;
+            $_SESSION['userid'] = getUserId($email);
             header("Location: dashboard.php");
         } else {
             Echo "Error entering information into database<br><br>";
