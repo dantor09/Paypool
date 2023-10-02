@@ -26,11 +26,11 @@
         $lname = $_SESSION['lname'];
     ?>
     </h2>
-
+    <?php echo "<h2> Group Name: " .$_SESSION['GroupName'] . "</h2>"?>
     <?php
         echo "<h2>Manager: " . $_SESSION['manager_first_name'] . " " . $_SESSION['manager_last_name'] . "</h2>";
     ?>
-   
+    
     <?php
             
         $db = get_mysqli_connection();

@@ -35,7 +35,10 @@
         $fname = $_SESSION['fname'];
         $lname = $_SESSION['lname'];
     ?>
-    <h2> You are the manager of this session </h2> <br>
+    <?php echo "<h2>Group Name: " .$_SESSION['GroupName'] . "</h2>"?>
+    <h2> You are the manager of this session </h2> 
+    
+    <br>
     <?php
         if(!empty($_POST['email_input']) && isset($_POST['email_button'])) {
             $query_incoming_user = $db->prepare("SELECT UserID, FName, Email
@@ -226,7 +229,7 @@
                 echo "Even more errors: " . $query2->error;
             }
 
-            $query3 = $db->prepare("UPDATE Transaction SET SessionID = 1 WHERE SessionID = (?)");
+            $query3 = $db->prepare("DELETE FROM Transaction WHERE sessionId = ?");
             $query3->bind_param("s", $_SESSION['SessionID']);
             if($query3->execute()) {
                 $query3->close();
@@ -238,7 +241,7 @@
                 echo "Even more errors: " . $query3->error;
             }
 
-            $query1 = $db->prepare("delete from PaypoolSession where SessionID = ?");
+            $query1 = $db->prepare("DELETE FROM PaypoolSession where sessionId = ?");
             $query1->bind_param("s", $_SESSION['SessionID']);
             if($query1->execute()) {
                 $query1->close();

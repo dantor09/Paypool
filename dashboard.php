@@ -39,6 +39,18 @@
         $query->close();
         return [$rows[0]['Fname'], $rows[0]['Lname']];
     }
+
+    function getGroupName($session_id) {
+        global $db;
+        $query = $db->prepare("SELECT name FROM PaypoolSession WHERE sessionId = ?");
+        $query->bind_param('s', $session_id);
+        $query->execute();
+        $result = $query->get_result();
+        $rows = $result->fetch_all(MYSQLI_ASSOC);
+        $query->close();
+        return $rows[0]['name'];
+    }
+
 ?>
 
 <html>
@@ -72,14 +84,26 @@
             "value" => "Create New Session"                         // Display Create new session on page
         ), "createbtn");                                            // name this button "createbtn"
         $insert_form->build_form();                                 // Build the form 
-        if (isset($_POST["createbtn"])) {                             // If button is pressed
-            $query = $db->prepare("INSERT INTO PaypoolSession (UserID) VALUES (?)");    // Prepare a query to make new paypool session
-            $query->bind_param('s', $_SESSION['userid']);           // Pass the user id of the person logged in, to the query parameter
+        if (isset($_POST["submitSession"])) {                             // If button is pressed
+            $query = $db->prepare("INSERT INTO PaypoolSession (userId, name, createdAt) VALUES (?, ?, NOW())");    // Prepare a query to make new paypool session
+            $query->bind_param('ss', $_SESSION['userid'], $_POST['sessionName']);           // Pass the user id of the person logged in, to the query parameter
             
             if ($query->execute()) {header( "Location: " . $_SERVER['PHP_SELF']);}
             else { echo "Error inserting: " . mysqli_error();}
         }
     ?>
+    <!-- Hidden Form -->
+    <div id="sessionForm" style="display: none;">
+        <form method="post">
+            <div>
+                <label for="sessionName">Session Name:</label><br>
+                <input type="text" placeholder="Beach Trip" id="sessionName" name="sessionName" required>
+            </div>
+            <!-- Add more form elements as required -->
+            <input class="button" type="submit" name="submitSession" value="Submit">
+        </form>
+    </div>
+
 </div>
 <hr>
 <h2>Paypool Sessions</h2>
@@ -88,9 +112,9 @@
     <div class="mySessions">
         <div class="inSession"> 
             <?php
-            // Query the Session ID's of the Session ID's the user is manager of and the percentage value too 
-            $query = $db->prepare("SELECT SessionID AS 'Sessions', Percentage AS 'Percentage' FROM Joins WHERE UserID = ? AND SessionID IN(SELECT SessionID FROM PaypoolSession WHERE UserID = ?)");
-            $query->bind_param('ss', $_SESSION['userid'], $_SESSION['userid'] );
+            // Query the session ID's that the user is a manager of 
+            $query = $db->prepare("SELECT DISTINCT ps.name AS 'Name', ps.sessionId AS 'Session ID', j.Percentage FROM PaypoolSession AS ps LEFT JOIN Joins AS j ON ps.SessionID = j.SessionID WHERE ps.UserId = ?");
+            $query->bind_param('s',$_SESSION['userid'] );
             $query->execute();
             $result = $query->get_result();
             $rows = $result->fetch_all(MYSQLI_ASSOC);
@@ -104,8 +128,8 @@
         </div>
         <div class="inSession">
             <?php
-            // Query the Session ID's of the Session ID's the user has Joined and is not a manager of ... 
-            $query = $db->prepare("SELECT SessionID AS 'Joined Sessions\t', Percentage FROM Joins WHERE UserID = ? AND SessionID NOT IN(SELECT SessionID FROM PaypoolSession WHERE UserID = ?)");
+            // Query the Session ID's the user is a part of but not a manager of 
+            $query = $db->prepare("SELECT ps.name AS 'Name',ps.sessionId AS 'Session ID',  j.Percentage  FROM Joins AS j LEFT JOIN PaypoolSession AS ps ON j.SessionID = ps.SessionID WHERE j.UserID = ? AND ps.UserID != ?");
             $query->bind_param('ss', $_SESSION['userid'], $_SESSION['userid'] );
             $query->execute();
             $result = $query->get_result();
@@ -145,6 +169,7 @@
                 $_SESSION['manager_first_name'] = $name[0];
                 $_SESSION['manager_last_name'] = $name[1];
                 $_SESSION['SessionID'] = $_POST['enter_session'];
+                $_SESSION['GroupName'] = getGroupName($_POST['enter_session']);
                 
                 if($user_is_manager) {
                     header("Location: manager_session.php");
@@ -161,5 +186,6 @@
         ?>
     </div>
 </div>
+<script  src="./assets/js/dashboard.js"></script>
 </body>
 </html>
