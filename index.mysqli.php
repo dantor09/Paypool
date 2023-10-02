@@ -7,7 +7,7 @@ require_once("config.php");
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title><?= $PROJECT_NAME ?></title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 <body>
 <h1><?= $PROJECT_NAME?></h1>
@@ -271,25 +271,4 @@ if (isset($_POST["delete"])) {
     }
 }
 ?>
-<!--
-if (!empty($_POST["search_id"])) {
-        echo "searching by UserID...";
-        $query = $db->prepare("select * from UserProfile where UserID = ?");
-        $query->bind_param("i", $_POST["search_id"]);
-    }
-    else if (!empty($_POST["search_data"])) {
-        echo "searching by first name...";
-        $query = $db->prepare("select * from UserProfile where FName = ?");
-        $query->bind_param("s", $_POST["search_data"]);
-    }
-    if ($query) {
-        $query->execute();
-        $result = $query->get_result();
-        $rows = $result->fetch_all(MYSQLI_ASSOC);
-        echo makeTable($rows);
-    }
-    else{
-        echo "Error executing query: " . mysqli_error();
-    }
 
--->
