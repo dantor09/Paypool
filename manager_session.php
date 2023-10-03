@@ -35,14 +35,10 @@
         <a href="signin.php"><img src="payool_logo.png" id="logo"/></a>
         <?php require_once("nav.php");?>
     </div>
-    <?php
-        $fname = $_SESSION['fname'];
-        $lname = $_SESSION['lname'];
-    ?>
+
     <?php echo "<h2>Group Name: " .$_SESSION['GroupName'] . "</h2>"?>
     <h2> You are the manager of this session </h2> 
     
-    <br>
     <?php
         if(!empty($_POST['email_input']) && isset($_POST['email_button'])) {
             $query_incoming_user = $db->prepare("SELECT UserID, FName, Email
@@ -81,12 +77,17 @@
                 }
             }   
             else {
-                echo "User does not exist <br>";
+                echo "User does not exist<br>";
             }
         }
+        ?>
+<div class="paypool_container">
+    <?php        
         $add_user_form = new PhpFormBuilder();
         $add_user_form->set_att("method", "POST");
-        
+    ?>
+    <div class="email_section">
+    <?php 
         $add_user_form-> add_input("", array(
             "type" => "text",
             "placeholder" => "Enter email"
@@ -102,7 +103,7 @@
         $update_percentage->execute();
         $update_percentage->close();
     ?>
-
+    </div>
     <?php  
         $query = $db->prepare("CALL GetMembers(?)");
         $query->bind_param('s', $_SESSION['SessionID']);
@@ -121,7 +122,7 @@
         }
     ?>
 
-    <form  method="POST">
+    <form  class="transaction_section" method="POST">
         <label for="category">Transaction Category:</label>
         <select name="category" id="category">
             <option value="food">Food</option>
@@ -171,6 +172,9 @@
     <?php
         $remove_transaction_form = new PhpFormBuilder();
         $remove_transaction_form->set_att("method", "POST");
+    ?>
+    <div class="remove_transaction_section">
+    <?php 
         $remove_transaction_form-> add_input("", array(
             "type" => "text",
             "placeholder" => "9"
@@ -187,7 +191,8 @@
             $remove_transaction->bind_param('ss',$_POST['transaction_input'], $_SESSION['SessionID']);
             $remove_transaction->execute();
         }
-    ?> 
+    ?>
+    </div> 
      <?php  
         $query = $db->prepare("CALL GetTransactions(?)");        
         $query->bind_param('s', $_SESSION['SessionID']);
@@ -195,10 +200,10 @@
             $result = $query->get_result();
             $rows = $result->fetch_all(MYSQLI_ASSOC);
             if(count($rows) > 1 || count($rows) == 0) {
-                echo "<div class='text_output'> There are " . count($rows) . " transactions </div>";
+                echo "<div class='text_output plural_transaction'> " .count($rows) . " transactions </div>";
             }
             else { 
-                echo "<div class='text_output'> There is " . count($rows) . " transaction </div>";
+                echo "<div class='text_output single_transaction'>" . count($rows) . " transaction </div>";
             }
             echo "<div class='transactions_table text_output'>" . makeTable($rows) . "</div>";
             $query->close();
@@ -209,16 +214,21 @@
             echo "Even more errors: " . $query->error;
         }
         ?>
-        <h2></h2><h2></h2>
+
         <?php
         $delete_form = new PhpFormBuilder();
         $delete_form->set_att("method", "POST");
+        ?>
+        <div class="delete_paypool_section">
+        <?php 
         $delete_form->add_input("Insert", array(
             "type" => "submit",
             "value" => "Delete this Paypool Session - WARNING: IRREVERSIBLE"
         ), "delete_id");
         $delete_form->build_form();
-
+        ?>
+        </div>
+        <?php
         if (isset($_POST["delete_id"])) {
             $query2 = $db->prepare("DELETE FROM Joins WHERE SessionID = (?)");
             $query2->bind_param("s", $_SESSION['SessionID']);
@@ -304,6 +314,7 @@
         echo $totaldue;
         echo"</h2>";
     ?>
+    </div>
     <?php 
         $db->close();
     ?>
