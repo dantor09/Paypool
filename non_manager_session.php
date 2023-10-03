@@ -1,8 +1,11 @@
 <?php
     require_once("config.php");
-    if(!isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == false){
-    header("Location: signin.php");
-}
+    if(!isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == false) {
+        header("Location: signin.php");    
+    }
+    if($_SESSION['is_manager'] == true) {
+        header("Location: dashboard.php");
+    }
 ?>
 <html>
 <head>
