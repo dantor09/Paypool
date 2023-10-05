@@ -11,7 +11,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Session <?= $_SESSION['SessionID']?> | <?= $PROJECT_NAME?></title>
+    <title><?= $_SESSION['GroupName']?> | <?= $PROJECT_NAME?></title>
     <link rel="stylesheet" href="./assets/css/style.css">
 
 </head>
