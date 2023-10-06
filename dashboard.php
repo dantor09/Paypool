@@ -113,7 +113,7 @@
         <div class="inSession"> 
             <?php
             // Query the session ID's that the user is a manager of 
-            $query = $db->prepare("SELECT DISTINCT ps.name AS 'Name', ps.sessionId AS 'Session ID', j.Percentage FROM PaypoolSession AS ps LEFT JOIN Joins AS j ON ps.SessionID = j.SessionID WHERE ps.UserId = ?");
+            $query = $db->prepare("SELECT ps.name AS 'Name', ps.sessionId AS 'Session ID', j.Percentage FROM PaypoolSession AS ps LEFT JOIN Joins AS j ON (ps.SessionID = j.SessionID AND ps.userId = j.UserID) WHERE ps.UserId = ?");
             $query->bind_param('s',$_SESSION['userid'] );
             $query->execute();
             $result = $query->get_result();
