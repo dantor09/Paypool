@@ -15,7 +15,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $_SESSION['GroupName']?> | <?= $PROJECT_NAME?></title>
-    <link rel="stylesheet" href="./assets/css/style.css">
     <link rel="stylesheet" href="./assets/css/manager_session.css">
 
 </head>
@@ -33,9 +32,8 @@
     ?>
     <div>
         <a href="signin.php"><img src="payool_logo.png" id="logo"/></a>
-        <?php require_once("nav.php");?>
     </div>
-
+    <?php require_once("nav.php");?>
     <?php echo "<h2>Group Name: " .$_SESSION['GroupName'] . "</h2>"?>
     <h2> You are the manager of this session </h2> 
     

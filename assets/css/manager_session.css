@@ -5,6 +5,33 @@
   color: black;
   /*border: 1px solid black;*/
 }
+nav {
+	display: flex;
+    min-width: 600px;
+    max-width: 800px;
+	justify-content: space-between;
+	align-items: center;
+    margin-top: 20px;
+}
+.nav_btn {
+	padding: 10px 40px;
+	border-radius: 15px;
+	text-decoration: none;
+}
+.nav_btn:link, .nav_btn:visited {
+	border-style: solid;
+	color: #1d2222;
+
+}
+
+.nav_btn:hover {
+	background-color: #1d2222;
+	color: white;
+}
+
+.nav_btn:active {
+	background-color: slategray;
+}
 body {
     display: flex;
     flex-direction: column;
@@ -60,6 +87,8 @@ input[type="submit"] {
     nav {
         flex-direction: column;
         height: 200px;
+        max-width: unset;
+        min-width: unset;
     }
     nav > * {
         padding: 0px;
