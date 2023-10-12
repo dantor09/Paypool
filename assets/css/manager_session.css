@@ -1,7 +1,7 @@
 *,
 ::before,
 ::after {
-  box-sizing: content-box;
+  box-sizing: border-box;
   color: black;
   /*border: 1px solid black;*/
 }
@@ -47,6 +47,7 @@ form {
     border-radius: 5px;
     background: linear-gradient(to bottom, #9b9696 0%, #696767 100%);
     box-shadow: 5px 5px 10px rgba(5,5,5,0.5);
+    height: 100%;
 }
 input {
     margin: 10px;
@@ -74,14 +75,11 @@ input[type="submit"] {
     border-radius: 5px;
     color: rgb(0, 0, 0);
 }
-
+.members_table {
+    grid-column: span 3;
+}
 .members_table, .transactions_table {
-    display: flex;
     overflow-y: scroll;
-    justify-content: center;
-    border-collapse: collapse;
-    align-items: flex-start;
-    height: unset;
 }
 @media screen and (max-width: 800px) {
     .paypool_container {
@@ -106,11 +104,14 @@ input[type="submit"] {
     .paypool_container {
         display: grid;
         grid-template-columns: 200px 200px 200px 300px;
-        grid-template-rows: 35px 50px auto auto 1fr;
+        grid-template-rows: 35px 150px auto 1fr;
         background-color: rgb(255, 255, 255);
         gap: 10px;
         margin: 0px;
         padding: 0px;
+    }
+    br {
+        display: none;
     }
     .text_output, .users_in_session {
         margin-bottom: 0px;
@@ -122,21 +123,10 @@ input[type="submit"] {
     }
     .email_section {
         grid-column: 1 / 2;
-        grid-row: 2 / 4;
-        background-color: pink;
+        grid-row: 2 / 3;
+        height: 100%;
     }
-    form {
-        margin: 0px;
-        padding: 0px;
-    }
-    .members_table_wrapper {
-        overflow-y: scroll;
-        grid-column: 2 / 5;
-        grid-row: 2 / 4;
-        max-height: 100px;
-        padding: 0px;
-        margin: 0px;
-    }
+
     .transaction_section {
         grid-column: 1 / 2;
         grid-row: 4 / 6;
@@ -155,8 +145,13 @@ input[type="submit"] {
         grid-column: 3 / -1;
         grid-row: 6 / 7;
     }
+    .session_total {
+        grid-column: 1 / 2;
+        grid-row: 6 / 7;
+    }
     .delete_paypool_section {
         order: 7;
         grid-column: 1/ -1;
+        grid-row: 7 / 8;
     }
 }

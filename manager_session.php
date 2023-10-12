@@ -109,7 +109,7 @@
             $result = $query->get_result();
             $rows = $result->fetch_all(MYSQLI_ASSOC);
             echo "<div class='users_in_session'>" . display_session_text(count($rows)) . "</div>";
-            echo "<div class='members_table_wrapper'><div class='members_table text_output'>" . makeTable($rows) . "</div></div>";
+            echo "<div class='members_table text_output'>" . makeTable($rows) . "</div>";
             $query->close();
             echo "<br>";
         }
@@ -304,16 +304,16 @@
             echo "Additinal Error: " . mysqli_errno();
             echo "Even more errors: " . $totalquery2->error;
         }
-
-        echo "<h2>Session Transaction Total: $"; 
+        echo "<h2 class='session_total'>Session Transaction Total: $"; 
         echo $totaldue2;
         echo "</h2>";
-        echo "<h2>Total Each Member Owes to Session: $"; 
-        echo $totaldue;
-        echo"</h2>";
     ?>
     </div>
     <?php 
+        
+        echo "<h2>Total Each Member Owes to Session: $"; 
+        echo $totaldue;
+        echo"</h2>";
         $db->close();
     ?>
 </body>
