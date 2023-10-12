@@ -109,9 +109,9 @@
             $result = $query->get_result();
             $rows = $result->fetch_all(MYSQLI_ASSOC);
             echo "<div class='users_in_session'>" . display_session_text(count($rows)) . "</div>";
-            echo "<div class='members_table text_output'>" . makeTable($rows) . "</div>";
+            echo "<div class='members_table_wrapper'><div class='members_table text_output'>" . makeTable($rows) . "</div></div>";
             $query->close();
-            echo "<br><br>";
+            echo "<br>";
         }
         else {
             echo "Error: " . mysqli_error();
@@ -158,7 +158,7 @@
             $stmt = $db->prepare("CALL AddTransaction (?,?,?,?,?,?)");
             $stmt->bind_param('sssssd',$_SESSION['userid'], $_SESSION['SessionID'], $_POST['category'], $_POST["date"],$_POST["item"], $_POST["price"]);
             if($stmt->execute()) {    
-                echo "Transaction added successfully <br>";
+                echo "<p>Transaction added successfully.</p>";
                 $stmt->close();
             }
             else {
