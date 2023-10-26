@@ -93,12 +93,13 @@ nav {
 }
 
 #createbtn {
+	height: 50px;
+	width: 150px;
 	margin-top: 10px;
 	margin-bottom: -10px;
 	background-color: #1d2222;
 	color: white;
-	padding: 25px 75px;
-	font-size: 18;
+	font-size: 13;
 	cursor: pointer;
 	border-radius: 15px;
 }

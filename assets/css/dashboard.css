@@ -5,10 +5,6 @@
     color: black;
 }
 
-body {
-    background: linear-gradient(180deg, #ffffff 0%, #c5c5c5 65%, #3a3a3a 100%);
-}
-
 .sessionContainer {
     border: 1px solid black;
     border-radius: 10px;
@@ -17,6 +13,7 @@ body {
 	display: flex;
 	justify-content: space-around;
 }
+
 
 .inSession {
 	padding: 10px 25px;
@@ -53,7 +50,7 @@ body {
 .button {
     padding: 10px;
     border-radius: 5px;
-    color: black;
+    color: rgb(0, 0, 0);
     font-weight: bold;
     cursor: pointer;
 }
