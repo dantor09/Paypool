@@ -22,12 +22,10 @@
     <?php 
         function display_session_text($users_in_session_count) {
             $text = "You have " . $users_in_session_count;
-            if ($users_in_session_count > 1) {
-                return $text . " users in session: " . $_SESSION['SessionID'];
-            }
-            else {
-                return $text . " user in session " . $_SESSION['SessionID'];
-            }
+            $text .= ($users_in_session_count > 1) ? " users in session: " : " user in session: ";
+            $text .= $_SESSION['SessionID'];
+
+            return $text;
         }
     ?>
     <div class="logo_container">
@@ -47,6 +45,7 @@
             $query_incoming_user->execute();
             $result = $query_incoming_user->get_result();
             $incoming_user = $result->fetch_all(MYSQLI_ASSOC);
+
             if(!empty($incoming_user)) {
                 $already_in_session = $db->prepare("SELECT FName, Email FROM Joins Join UserProfile ON(Joins.UserID = UserProfile.UserID) WHERE SessionID = ?");
                 $already_in_session->bind_param('s', $_SESSION['SessionID']);
