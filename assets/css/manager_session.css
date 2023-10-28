@@ -5,6 +5,17 @@
   color: black;
   /*border: 1px solid black;*/
 }
+body {
+    background: radial-gradient(circle at 10% 20%, rgb(0, 102, 161) 0%, rgb(0, 68, 108) 90.1%);
+}
+img {
+    max-width: 200px;
+    height: 100px;
+    margin: 0px;
+}
+input {
+    color: black;
+}
 nav {
 	display: flex;
     min-width: 600px;
@@ -13,6 +24,12 @@ nav {
 	align-items: center;
     margin-top: 20px;
 }
+.logo_container {
+    display: grid;
+    grid-template-columns: 120px 100px;
+    align-items: center;
+    justify-content: center;
+}
 .nav_btn {
 	padding: 10px 40px;
 	border-radius: 15px;
@@ -20,7 +37,8 @@ nav {
 }
 .nav_btn:link, .nav_btn:visited {
 	border-style: solid;
-	color: #1d2222;
+	background-color: #1d2222;
+    color: white;
 
 }
 
@@ -40,6 +58,7 @@ body {
 }
 .paypool_container {
     display: unset;
+    background: radial-gradient(circle at 10% 20%, rgb(0, 102, 161) 0%, rgb(0, 68, 108) 90.1%);
 }
 form {
     text-align: center;

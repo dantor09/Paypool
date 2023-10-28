@@ -13,21 +13,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title><?= $_SESSION['GroupName']?> | <?= $PROJECT_NAME?></title>
     <link rel="stylesheet" href="./assets/css/style.css">
-
+    <style>
+        img {
+            max-width: 200px;
+            height: 100px;
+            margin: 0px;
+        }
+        input {
+            color: black;
+        }
+        .logo_container {
+            display: grid;
+            grid-template-columns: 120px 100px;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
 </head>
 <body>
 
-    <div class>
-        <a href="signin.php"><img src="payool_logo.png" id="logo"/></a>
-        <?php
-            require_once("nav.php");
-        ?>
+    <div class="logo_container">
+        <a href="signin.php"><img id="logo" src="credit_card.png" /></a>
+        <h1 id="paypool_text">PayPool</h1>
     </div>
+
+    <?php require_once("nav.php");?>
+
     <h2>
     <?php
         $fname = $_SESSION['fname'];
         $lname = $_SESSION['lname'];
     ?>
+
     </h2>
     <?php echo "<h2> Group Name: " .$_SESSION['GroupName'] . "</h2>"?>
     <?php

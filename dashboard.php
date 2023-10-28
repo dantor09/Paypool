@@ -56,17 +56,17 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link rel="stylesheet" href="./assets/css/style.css">
     <link rel="stylesheet" href="./assets/css/dashboard.css">
     <title>Dashboard | <?= $PROJECT_NAME?></title>
 </head>
 <body>
-<div>
-    <a href="signin.php"><img id="logo" src="payool_logo.png" /></a>
-    <?php require_once("nav.php"); ?>                               
+<div class="logo_container">
+    <a href="signin.php"><img id="logo" src="credit_card.png" /></a>
+    <h1 id="paypool_text">PayPool</h1>
 </div>
-
+<?php require_once("nav.php"); ?> 
 
 <?php
     $fname = $_SESSION['fname'];

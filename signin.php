@@ -17,10 +17,12 @@
 </head>
 
 <body>
-<div>
-    <a href="signin.php"><img src="payool_logo.png" id="logo"/></a>
-    <?php require("nav.php");?>
+<div class="logo_container">
+    <a href="signin.php"><img id="logo" src="credit_card.png" /></a>
+    <h1 id="paypool_text">PayPool</h1>
 </div>
+<?php require("nav.php");?>
+
 <?php
     if (isset($_POST) && !empty($_POST)) {
         $email = htmlspecialchars($_POST['email']);

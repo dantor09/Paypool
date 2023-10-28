@@ -4,7 +4,9 @@ body {
     line-height:1.6;
     font-size:18px;
     color:#444;
+	color: rgb(255, 255, 255);
     padding:0 10px;
+	background: radial-gradient(circle at 10% 20%, rgb(0, 102, 161) 0%, rgb(0, 68, 108) 90.1%);
 }
 
 h1,h2,h3 {
@@ -14,7 +16,17 @@ h1,h2,h3 {
 h1 {
     text-align: center;
 }
-
+img {
+    max-width: 200px;
+    height: 100px;
+    margin: 0px;
+}
+.logo_container {
+    display: grid;
+    grid-template-columns: 120px 100px;
+    align-items: center;
+    justify-content: center;
+}
 nav {
 	display: flex;
 	justify-content: space-around;
@@ -28,18 +40,11 @@ nav {
 	align-items: center;
 }
 
-#logo {
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-}
-
 .signIn, .signup {
 	margin-top: 20px;
 	margin-left: 10%;
 	margin-right: 10%;
 }
-
 .input_areas, #enter_session {
 	margin-bottom: 15px;
 	width: 100%;
@@ -79,8 +84,8 @@ nav {
 
 .nav_btn:link, .nav_btn:visited {
 	border-style: solid;
-	color: #1d2222;
-
+	color: white;
+	background-color: #1d2222;
 }
 
 .nav_btn:hover {
@@ -137,4 +142,8 @@ nav {
 
 body > div.manager-food {
 	background-color: purple;
+}
+
+.input_areas {
+	font-size: 16px;
 }

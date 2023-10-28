@@ -13,7 +13,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title><?= $_SESSION['GroupName']?> | <?= $PROJECT_NAME?></title>
     <link rel="stylesheet" href="./assets/css/manager_session.css">
 
@@ -30,8 +30,9 @@
             }
         }
     ?>
-    <div>
-        <a href="signin.php"><img src="payool_logo.png" id="logo"/></a>
+    <div class="logo_container">
+        <a href="signin.php"><img id="logo" src="credit_card.png" /></a>
+        <h1 id="paypool_text">PayPool</h1>
     </div>
     <?php require_once("nav.php");?>
     <?php echo "<h2>Group Name: " .$_SESSION['GroupName'] . "</h2>"?>

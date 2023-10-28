@@ -136,12 +136,30 @@ function cleaninput($data){
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Sign Up | <?= $PROJECT_NAME?></title>
 	<link rel="stylesheet" href="./assets/css/style.css">
+    <style>
+        img {
+            max-width: 200px;
+            height: 100px;
+            margin: 0px;
+        }
+        input {
+            color: black;
+        }
+        .logo_container {
+            display: grid;
+            grid-template-columns: 120px 100px;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
 </head>
 <body>
-	<div>
-    <a href="signin.php"><img src="payool_logo.png" id="logo"></a>
-		<?php require "nav.php"; ?>
-	</div>
+    <div class="logo_container">
+        <a href="signin.php"><img id="logo" src="credit_card.png" /></a>
+        <h1 id="paypool_text">PayPool</h1>
+    </div>
+
+	<?php require "nav.php"; ?>
 	
 	<div class="signup">
 	<?php if(!$validpassword) { ?>
