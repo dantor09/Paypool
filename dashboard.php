@@ -113,7 +113,7 @@
         <div class="inSession"> 
             <?php
             // Query the session ID's that the user is a manager of 
-            $query = $db->prepare("SELECT ps.name AS 'Name', ps.sessionId AS 'Session ID', j.Percentage FROM PaypoolSession AS ps LEFT JOIN Joins AS j ON (ps.SessionID = j.SessionID AND ps.userId = j.UserID) WHERE ps.UserId = ?");
+            $query = $db->prepare("SELECT ps.name AS 'Name', ps.sessionId AS 'Session ID', CONCAT(j.Percentage,' %') AS 'Percentage' FROM PaypoolSession AS ps LEFT JOIN Joins AS j ON (ps.SessionID = j.SessionID AND ps.userId = j.UserID) WHERE ps.UserId = ?");
             $query->bind_param('s',$_SESSION['userid'] );
             $query->execute();
             $result = $query->get_result();
@@ -129,11 +129,12 @@
         <div class="inSession">
             <?php
             // Query the Session ID's the user is a part of but not a manager of 
-            $query = $db->prepare("SELECT ps.name AS 'Name',ps.sessionId AS 'Session ID',  j.Percentage  FROM Joins AS j LEFT JOIN PaypoolSession AS ps ON j.SessionID = ps.SessionID WHERE j.UserID = ? AND ps.UserID != ?");
+            $query = $db->prepare("SELECT ps.name AS 'Name',ps.sessionId AS 'Session ID',  CONCAT(j.Percentage,' %') AS 'Percentage'  FROM Joins AS j LEFT JOIN PaypoolSession AS ps ON j.SessionID = ps.SessionID WHERE j.UserID = ? AND ps.UserID != ?");
             $query->bind_param('ss', $_SESSION['userid'], $_SESSION['userid'] );
             $query->execute();
             $result = $query->get_result();
             $rows = $result->fetch_all(MYSQLI_ASSOC);
+        
             if($rows == null) {echo "You have not joined any sessions";}
             else {
                 echo "<h2>Joined</h2>";
