@@ -1,0 +1,156 @@
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+body {
+    background: radial-gradient(circle at 10% 20%, rgb(0, 102, 161) 0%, rgb(0, 68, 108) 90.1%);
+}
+img {
+    max-width: 200px;
+    height: 100px;
+    margin: 0px;
+}
+input {
+    color: black;
+}
+nav {
+	display: flex;
+    min-width: 600px;
+    max-width: 800px;
+	justify-content: space-between;
+	align-items: center;
+    margin-top: 20px;
+}
+.logo_container {
+    display: grid;
+    grid-template-columns: 120px 100px;
+    align-items: center;
+    justify-content: center;
+}
+.nav_btn {
+	padding: 10px 40px;
+	border-radius: 15px;
+	text-decoration: none;
+}
+.nav_btn:link, .nav_btn:visited {
+	border-style: solid;
+	background-color: #1d2222;
+    color: white;
+
+}
+
+.nav_btn:hover {
+	background-color: #1d2222;
+	color: white;
+}
+
+.nav_btn:active {
+	background-color: slategray;
+}
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+}
+.paypool_container {
+    display: unset;
+    background: radial-gradient(circle at 10% 20%, rgb(0, 102, 161) 0%, rgb(0, 68, 108) 90.1%);
+}
+form {
+    text-align: center;
+    width: 100%;
+    border-radius: 5px;
+    background: linear-gradient(to bottom, #9b9696 0%, #696767 100%);
+    box-shadow: 5px 5px 10px rgba(5,5,5,0.5);
+    height: 100%;
+}
+input {
+    margin: 10px;
+    height: 30px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+input[type="submit"] {
+    background: linear-gradient(to bottom, #717171 0%, #3a3a3a 100%);
+    color: white;
+    font-weight: bold;
+    font-family: sans-serif;
+    border-radius: 10px;
+}
+.users_in_session, .text_output {
+    box-shadow: 5px 5px 10px rgba(5,5,5,0.5);
+    background: linear-gradient(to bottom, #9b9696 0%, #696767 100%);
+    width: 100%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-weight: bold;
+    border-radius: 5px;
+    color: rgb(0, 0, 0);
+}
+.members_table {
+    grid-column: span 3;
+}
+.members_table, .transactions_table {
+    overflow-y: scroll;
+}
+@media screen and (max-width: 800px) {
+    .paypool_container {
+        display: unset;
+    }
+    nav {
+        flex-direction: column;
+        height: 200px;
+        max-width: unset;
+        min-width: unset;
+    }
+    nav > * {
+        padding: 0px;
+    }
+    #logo {
+        height: 75px;
+        width: 300px;
+    }
+}
+
+@media screen and (min-width: 1000px) {
+    .paypool_container {
+        display: grid;
+        grid-template-columns: 200px 200px 200px 350px;
+        grid-template-rows:150px 350px 50px;
+        background-color: rgb(255, 255, 255);
+        gap: 10px;
+        margin: 0px;
+        padding: 0px;
+    }
+    br {
+        display: none;
+    }
+    .text_output, .users_in_session {
+        margin-bottom: 0px;
+        padding: 0px;
+    }
+    .users_in_session {
+        grid-column: 1 / 2;
+    }
+    .transaction_section {
+        grid-column: 1 / -1;
+        grid-row: 3 / -1;
+        background-color: orange;
+    }
+    .transactions_table {
+        grid-column: 2 / -1;
+        grid-row: 2 / 3;
+        height: 100%;
+        overflow-y: scroll;
+        background-color: purple;
+    }
+    .plural_transaction, .single_transaction {
+        grid-column: 1 / -1;
+        grid-row: 3 / 3;
+    }       
+}

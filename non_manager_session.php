@@ -13,25 +13,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title><?= $_SESSION['GroupName']?> | <?= $PROJECT_NAME?></title>
     <link rel="stylesheet" href="./assets/css/style.css">
-    <style>
-        img {
-            max-width: 200px;
-            height: 100px;
-            margin: 0px;
-        }
-        input {
-            color: black;
-        }
-        .logo_container {
-            display: grid;
-            grid-template-columns: 120px 100px;
-            align-items: center;
-            justify-content: center;
-        }
-    </style>
+    <link rel="stylesheet" href="./assets/css/non_manager_session.css"> 
 </head>
 <body>
-
+    <?php 
+        function display_session_text($users_in_session_count) {
+            $text = "";
+            if ($users_in_session_count > 1 || $users_in_session_count == 0) {
+                $text = "There are " . $users_in_session_count;
+                return $text . " users in session: " . $_SESSION['SessionID'];
+            }
+            else if ($users_in_session_count == 1) {
+                $text = "There is " . $users_in_session_count;
+                return $text . " user in session " . $_SESSION['SessionID'];
+            }
+        }
+    ?>
     <div class="logo_container">
         <a href="signin.php"><img id="logo" src="credit_card.png" /></a>
         <h1 id="paypool_text">PayPool</h1>
@@ -50,7 +47,7 @@
     <?php
         echo "<h2>Manager: " . $_SESSION['manager_first_name'] . " " . $_SESSION['manager_last_name'] . "</h2>";
     ?>
-    
+<div class="paypool_container">
     <?php
             
         $db = get_mysqli_connection();
@@ -61,13 +58,8 @@
             $result4 = $query4->get_result();
             $rows4 = $result4->fetch_all(MYSQLI_ASSOC);
             
-            if(count($rows4) > 1 || count($rows4) == 0){
-                echo "There are " . count($rows4) . " members in session " . $_SESSION['SessionID'];
-            }
-            else{ 
-                echo "There is " . count($rows4) . " member in session " . $_SESSION['SessionID'];
-            }
-            echo makeTable($rows4);
+            echo "<div class='users_in_session'>". display_session_text(COUNT($rows4)) . "</div>";
+            echo "<div class='members_table text_output'>" . makeTable($rows4) . "</div>";
             $query4->close();
             echo "<br><br>";
         }
@@ -140,16 +132,14 @@
             $result = $query->get_result();
             $rows = $result->fetch_all(MYSQLI_ASSOC);
             if(count($rows) > 1 || count($rows) == 0){
-                echo "There are " . count($rows) . " transactions";
+                echo "<div class='text_output plural_transaction'>".count($rows) . " transactions" . "</div>";
             }
             else
             { 
-                echo "There is " . count($rows) . " transaction";
+                echo "<div class='text_output single_transaction'>".count($rows) . " transaction" ."</div>";
             }
-            echo makeTable($rows);
+            echo "<div class='transactions_table text_output'>". makeTable($rows) . "</div>";
             $query->close();
-            
-            
         }
         else
         {
@@ -201,17 +191,17 @@
             echo "Error: " . mysqli_error();
             echo "Additinal Error: " . mysqli_errno();
             echo "Even more errors: " . $totalquery2->error;
-        }
-
+        }   
+    ?>  
+    </div>
+    <?php 
         echo "<h2>Session Transaction Total: $"; 
         echo $totaldue2;
         echo "</h2>";
         echo "<h2>Total due to Session: $"; 
         echo $totaldue;
         echo"</h2>";
+    ?>
 
-
-
-    ?>  
 </body>
 </html>
