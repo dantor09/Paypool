@@ -50,7 +50,32 @@
         $query->close();
         return $rows[0]['name'];
     }
-
+    // Place this at the top of your PHP file
+    function getTotalDebt($userId) {
+        global $db;
+        $totalDebt = "$" . 0;
+        $query = $db->prepare("CALL GetTotalDebtOverall(?)");
+        $query->bind_param('s', $userId);
+    
+        if (!$query->execute()) {
+            throw new Exception("Execution failed: " . $query->error);
+        }
+    
+        $result = $query->get_result();
+        if ($result === false) {
+            throw new Exception("Could not fetch result: " . $db->error);
+        }
+    
+        $rows = $result->fetch_all(MYSQLI_ASSOC);
+        if (!empty($rows)) {
+            $totalDebt = $rows[0]['Total'];
+        }
+    
+        $query->close();
+        return $totalDebt;
+    }
+    
+    
 ?>
 
 <html>
@@ -185,10 +210,25 @@
                 echo "You are not in session " . $_POST['enter_session'];
             }    
         }
-        
         ?>
     </div>
 </div>
+
+<?php
+        // You would call the function like this:
+    try {
+        $totalDebt = getTotalDebt($_SESSION['userid']);
+    } catch (Exception $e) {
+        // Handle error accordingly
+        die("An error occurred: " . $e->getMessage());
+    }
+?>
+
+<div class="total_owed_section">
+    <h2>Total Debt</h2>
+    <h3><?php echo $totalDebt; ?></h3>
+</div>
+
 <script  src="./assets/js/dashboard.js"></script>
 </body>
 </html>

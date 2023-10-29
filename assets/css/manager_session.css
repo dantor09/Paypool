@@ -113,10 +113,6 @@ input[type="submit"] {
     nav > * {
         padding: 0px;
     }
-    #logo {
-        height: 75px;
-        width: 300px;
-    }
 }
 
 @media screen and (min-width: 1000px) {

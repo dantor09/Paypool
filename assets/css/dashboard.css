@@ -71,6 +71,16 @@ input {
     font-weight: bold;
     cursor: pointer;
 }
+.total_owed_section {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5px;
+    align-items: center;
+    justify-content: space-around;
+}
+.total_owed_section > * {
+    margin: 0px;
+}
 @media screen and (max-width: 800px) {
     nav {
         flex-direction: column;
