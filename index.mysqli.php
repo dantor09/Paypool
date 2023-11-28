@@ -207,36 +207,36 @@ if (isset($_POST["delete"])) {
 
     if (!empty($_POST["delete_id"])) {
         echo "deleting by id...";
-        $query1 = $db->prepare("delete from Joins where UserID = ?");
+        $query1 = $db->prepare("DELETE from Joins where UserID = ?");
         $query1->$bind_param("i", $_POST["delete_id"]);
 
-        $query2 = $db->prepare("delete from PaymentInfo where UserID = ?");
+        $query2 = $db->prepare("DELETE from PaymentInfo where UserID = ?");
         $query2->$bind_param("i", $_POST["delete_id"]);
 
-        $query3 = $db->prepare("delete from Transaction where UserID = ?");
+        $query3 = $db->prepare("DELETE from Transaction where UserID = ?");
         $query3->$bind_param("i", $_POST["delete_id"]);
 
-        $query4 = $db->prepare("delete from PaypoolSession where UserID = ?");
+        $query4 = $db->prepare("DELETE from PaypoolSession where UserID = ?");
         $query4->$bind_param("i", $_POST["delete_id"]);
 
-        $query = $db->prepare("delete from UserProfile where UserID = ?");
+        $query = $db->prepare("DELETE from UserProfile where UserID = ?");
         $query->bind_param("i", $_POST["delete_id"]);
     }
     else if (!empty($_POST["delete_data"])) {
         echo "deleting by data...";
-        $query1 = $db->prepare("delete from Joins where Fname = ?");
+        $query1 = $db->prepare("DELETE from Joins where Fname = ?");
         $query1->$bind_param("s", $_POST["delete_data"]);
 
-        $query2 = $db->prepare("delete from PaymentInfo where Fname = ?");
+        $query2 = $db->prepare("DELETE from PaymentInfo where Fname = ?");
         $query2->$bind_param("s", $_POST["delete_data"]);
 
-        $query3 = $db->prepare("delete from Transaction where Fname = ?");
+        $query3 = $db->prepare("DELETE from Transaction where Fname = ?");
         $query3->$bind_param("s", $_POST["delete_data"]);
 
-        $query4 = $db->prepare("delete from PaypoolSession where Fname = ?");
+        $query4 = $db->prepare("DELETE from PaypoolSession where Fname = ?");
         $query4->$bind_param("s", $_POST["delete_data"]);
         
-        $query = $db->prepare("delete from UserProfile where Fname = ?");
+        $query = $db->prepare("DELETE from UserProfile where Fname = ?");
         $query->bind_param("s", $_POST["delete_data"]);        
     }
 
